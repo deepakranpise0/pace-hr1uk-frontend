@@ -26,7 +26,35 @@
             "prefix": "pace-hr1-uk-frontend",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
+              }
+            ]
+          }
+        ],
+        "sort-exports/sort-exports": ["error", {"sortDir": "asc"}],
+        "no-underscore-dangle": "off",
+        "consistent-return": "warn",
+        "no-shadow": "warn",
+        "eqeqeq": "warn",
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "global-require": "warn",
+        "import/no-dynamic-require": "warn",
+        "import/prefer-default-export": "off",
+        "class-methods-use-this": "off",
+        "dot-notation": "warn",
+        "@typescript-eslint/return-await": "off",
       }
     },
     {
