@@ -3,19 +3,24 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
         <mat-toolbar>Menu</mat-toolbar>
         <mat-nav-list>
-            <a mat-list-item href="#">Link 1</a>
-            <a mat-list-item href="#">Link 2</a>
-            <a mat-list-item href="#">Link 3</a>
+            <a mat-list-item *ngFor="let item of navItems; let i= index;" [ngClass]="{'active': i === 0}"
+                [href]="item.url">
+                <mat-icon>{{item.icon}}</mat-icon>
+                <span>
+                    {{item.label}}
+                </span>
+            </a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar color="primary">
             <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+                <mat-icon class="hamburger" aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            
+
         </mat-toolbar>
-        <pace-hr1-uk-frontend-home></pace-hr1-uk-frontend-home>
+        <!-- <pace-hr1-uk-frontend-home></pace-hr1-uk-frontend-home> -->
+        <router-outlet></router-outlet>
         <!-- Add Content Here -->
     </mat-sidenav-content>
 </mat-sidenav-container>

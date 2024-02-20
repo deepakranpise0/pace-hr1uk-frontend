@@ -14,8 +14,45 @@
     background: inherit;
 }
 
+/* .mat-toolbar.mat-primary {
+    background-color: rgb(243 243 246);
+} */
+
 .mat-toolbar.mat-primary {
     position: sticky;
     top: 0;
     z-index: 1;
+    background-color: rgb(243 243 246);
+
+}
+
+.grid-container {
+    background: #f8f8f8;
+}
+
+.hamburger {
+    color: #070845
+}
+
+::ng-deep .mat-drawer-inner-container {
+    background-color: rgb(243 243 246);
+}
+
+::ng-deep .mat-mdc-list-item-unscoped-content {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: #070845 !important;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .mat-icon {
+        height: 26px;
+    }
+}
+
+.active {
+    /* background: #d8e6e6; */
+    background-color: #e0e0e5;
 }

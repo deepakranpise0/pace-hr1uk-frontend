@@ -1,4 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.d-flex {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.a-center {
+    align-items: center;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.g-15 {
+    gap: 15px;
+}
+
+.action {
+    padding-top: 8px;
+}
+
+.divider-container {
+    padding: 0 40px;
+}
+
+@media screen and (max-width: 400px) {
+    .divider-container {
+        padding: 0 20px;
+    }
+}
+
+.mat-mdc-raised-button:not(:disabled) {
+    background-color: #5265d1;
+    border: 1px solid #485ed2;
+}
+
+main {
+    margin: 10px;
+    height: 100%;
+
+    .mat-mdc-card {
+        top: 15%;
+        border-top: 2px solid #5265d1;
+        background-color: rgb(246 246 248);
+
+        mat-card-header {
+            display: flex;
+            justify-content: center;
+
+            h3 {
+                font-size: 24px;
+            }
+        }
+    }
+}

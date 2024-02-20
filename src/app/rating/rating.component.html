@@ -1,0 +1,45 @@
+<main>
+    <mat-card>
+        <mat-card-header>
+            <h3>
+                Tele-Communications
+            </h3>
+        </mat-card-header>
+        <div class="divider-container">
+            <mat-divider></mat-divider>
+        </div>
+        <mat-card-content>
+
+            <div class="question-container">
+
+                <h3>
+                    <span>Q1.</span>
+                    What is meant by telecommunications?
+                </h3>
+
+                <!-- <div class="stars d-flex flex-row g-15">
+                    <a href="#" *ngFor="let i of [1,2,3,4,5]" (click)="handleStars($event,i)">
+                        <mat-icon class="star-icon">star_border</mat-icon>
+                    </a>
+                </div> -->
+
+                <div class="stars d-flex flex-row g-15" (mouseleave)="resetStars()">
+                    <a href="#" *ngFor="let i of [1,2,3,4,5]" (mouseenter)="fillStars(i)" (click)="handleStars($event, i)">
+                      <mat-icon class="star-icon" [ngClass]="{'star-marked': i <= filledStars || i === savedStars}">
+                        {{ i <= filledStars || i === savedStars ? 'star' : 'star_border' }}
+                      </mat-icon>
+                    </a>
+                  </div>
+                  
+
+            </div>
+
+            <div class="action center g-15">
+                <button mat-stroked-button color="primary">Previous</button>
+
+                <button mat-raised-button color="primary">Next</button>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+</main>

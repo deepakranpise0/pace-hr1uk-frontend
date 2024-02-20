@@ -1,0 +1,41 @@
+main {
+
+    .question-container {
+        padding: 24px;
+
+        h3 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .question-container {
+            padding: 24px 6px;
+        }
+    }
+
+    .star-icon {
+        color: #070845;
+        height: 50px;
+        width: 50px;
+        padding-left: 9px;
+        font-size: 40px;
+        padding-top: 7px;
+    }
+
+    .star-icon {
+        margin: 5px;
+    }
+
+
+    .star-marked {
+        color: rgb(240, 240, 53);
+    }
+
+    .action {
+        button {
+            width: 100px;
+        }
+    }
+}
