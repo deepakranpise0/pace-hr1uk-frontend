@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { QuestionRatingModel, RatingModel } from '../common/models/RatingModel';
 
 @Component({
   selector: 'pace-hr1-uk-frontend-rating',
@@ -19,30 +20,81 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './rating.component.css',
 })
 export class RatingComponent {
-  filledStars: number = 0;
-  savedStars: number = 0;
+  public currentSetIndex = 0;
 
-  fillStars(starNumber: number) {
-    if (this.savedStars === 0) {
-      this.filledStars = starNumber;
+  public questionsSet: RatingModel[] = [
+    {
+      domain: 'Tele-Communications',
+      section: '',
+      questions: [
+        {
+          question: 'What is meant by telecommunications?',
+          ratings: 0,
+          filledStars: 0,
+        },
+        {
+          question:
+            'What is meant by telecommunications and give a brief applications in the industry?',
+          ratings: 0,
+          filledStars: 0,
+        },
+      ],
+    },
+    {
+      domain: 'System Architecture',
+      section: '',
+      questions: [
+        {
+          question: 'What is meant by telecommunications?',
+          ratings: 0,
+          filledStars: 0,
+        },
+        {
+          question:
+            'What is meant by telecommunications and give a brief applications in the industry?',
+          ratings: 0,
+          filledStars: 0,
+        },
+      ],
+    },
+  ];
+
+  fillStars(questionModel: QuestionRatingModel, starNumber: number) {
+    if (questionModel.ratings === 0) {
+      questionModel.filledStars = starNumber;
     } else {
-      this.filledStars = Math.max(starNumber, this.savedStars);
+      questionModel.filledStars = Math.max(starNumber, questionModel.ratings);
     }
   }
 
-  resetStars() {
-    if (this.savedStars === 0) {
-      this.filledStars = 0;
+  resetStars(questionModel: QuestionRatingModel) {
+    if (questionModel.ratings === 0) {
+      questionModel.filledStars = 0;
     } else {
-      if (this.savedStars < this.filledStars) {
-        this.filledStars = this.savedStars;
+      if (questionModel.ratings < questionModel.filledStars) {
+        questionModel.filledStars = questionModel.ratings;
       }
     }
   }
 
-  public handleStars(event: Event, index: number) {
+  public handleStars(
+    event: Event,
+    index: number,
+    questionModel: QuestionRatingModel
+  ) {
     event.preventDefault();
-    this.savedStars = index; // Save the marked stars
-    this.fillStars(index);
+    questionModel.ratings = index; // Save the marked stars
+    this.fillStars(questionModel, index);
+  }
+
+  public handleNext() {
+    if(this.currentSetIndex < this.questionsSet.length - 1) {
+      this.currentSetIndex += 1;
+    }
+  }
+  public handlePrevious() {
+    if(this.currentSetIndex > 0) {
+      this.currentSetIndex -= 1;
+    }
   }
 }

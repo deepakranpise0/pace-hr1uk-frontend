@@ -2,50 +2,36 @@
     <mat-card>
         <mat-card-header>
             <h3>
-                Tele-Communications
+                {{questionsSet[currentSetIndex]?.domain}}
             </h3>
         </mat-card-header>
         <div class="divider-container">
             <mat-divider></mat-divider>
         </div>
         <mat-card-content>
-
-            <div class="question-container">
+            <div class="question-container" *ngFor="let question of questionsSet[currentSetIndex]?.questions; let j = index">
+                <!-- <ng-template *ngFor="let question of questionSet.questions; let j = index"> -->
                 <div class="question">
                     <h3>
-                        <span>Q1.</span>
-                        What is meant by telecommunications?
+                        <span>Q{{j+1}}.</span>
+                        {{question?.question}}
                     </h3>
                 </div>
-                <div class="stars d-flex flex-row g-15" (mouseleave)="resetStars()">
-                    <a href="#" *ngFor="let i of [1,2,3,4,5]" (mouseenter)="fillStars(i)"
-                        (click)="handleStars($event, i)">
-                        <mat-icon class="star-icon" [ngClass]="{'star-marked': i <= filledStars || i === savedStars}">
-                            {{ i <= filledStars || i===savedStars ? 'star' : 'star_border' }} </mat-icon>
+                <div class="stars d-flex flex-row g-15" (mouseleave)="resetStars(question)">
+                    <a href="#" *ngFor="let i of [1,2,3,4,5]" (mouseenter)="fillStars(question,i)"
+                        (click)="handleStars($event, i, question)">
+                        <mat-icon class="star-icon"
+                            [ngClass]="{'star-marked': i <= question.filledStars || i === question.ratings}">
+                            {{ i <= question.filledStars || i===question.ratings ? 'star' : 'star_border' }} </mat-icon>
                     </a>
                 </div>
-            </div>
-
-            <div class="question-container">
-                <div class="question">
-                    <h3>
-                        <span>Q1.</span>
-                        What is meant by telecommunications and give a brief applications in the industry?
-                    </h3>
-                </div>
-                <div class="stars d-flex flex-row g-15" (mouseleave)="resetStars()">
-                    <a href="#" *ngFor="let i of [1,2,3,4,5]" (mouseenter)="fillStars(i)"
-                        (click)="handleStars($event, i)">
-                        <mat-icon class="star-icon" [ngClass]="{'star-marked': i <= filledStars || i === savedStars}">
-                            {{ i <= filledStars || i===savedStars ? 'star' : 'star_border' }} </mat-icon>
-                    </a>
-                </div>
+                <!-- </ng-template> -->
             </div>
 
             <div class="action center g-15">
-                <button mat-stroked-button color="primary">Previous</button>
+                <button mat-stroked-button color="primary" [disabled]="currentSetIndex === 0"  (click)="handlePrevious()">Previous</button>
 
-                <button mat-raised-button color="primary">Next</button>
+                <button mat-raised-button color="primary" [disabled]="currentSetIndex === questionsSet.length -1" (click)="handleNext()">Next</button>
             </div>
 
         </mat-card-content>
