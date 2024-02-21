@@ -2,6 +2,22 @@ main {
 
     .question-container {
         padding: 24px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        .question {
+            margin-top: 11px;
+            flex-grow: 2;
+            width: 60%;
+        }
+
+        @media screen and (max-width: 1074px) {
+            .question {
+                width: 50%;
+            }
+        }
 
         h3 {
             font-size: 20px;
@@ -15,19 +31,36 @@ main {
         }
     }
 
+    .stars {
+        flex-grow: 1;
+        display: flex;
+
+        a {
+            height: 50px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .question-container {
+            flex-direction: column;
+        }
+
+        .question,
+        .stars {
+            width: 100% !important;
+            /* Each item takes up full width */
+        }
+    }
+
     .star-icon {
         color: #070845;
-        height: 50px;
-        width: 50px;
-        padding-left: 9px;
+        height: 40px;
+        width: 40px;
+        /* padding-left: 9px; */
         font-size: 40px;
-        padding-top: 7px;
-    }
-
-    .star-icon {
+        /* padding-top: 7px; */
         margin: 5px;
     }
-
 
     .star-marked {
         color: rgb(240, 240, 53);
