@@ -13,6 +13,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { NavItemsContant } from './common/constant/NavItemsConstant';
 import { NavLinksModel } from './common/models/NavLinkModel';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   standalone: true,
@@ -27,7 +28,8 @@ import { MatCardModule } from '@angular/material/card';
     MatListModule,
     MatIconModule,
     AsyncPipe,
-    MatCardModule
+    MatCardModule,
+    MatMenuModule,
   ],
   selector: 'pace-hr1-uk-frontend-root',
   templateUrl: './app.component.html',

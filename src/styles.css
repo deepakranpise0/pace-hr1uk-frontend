@@ -59,7 +59,7 @@ main {
 
     .mat-mdc-card {
         top: 15%;
-        border-top: 2px solid #5265d1;
+        border-top: 4px solid #5265d1;
         background-color: rgb(246 246 248);
 
         mat-card-header {
