@@ -1,7 +1,9 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <mat-toolbar>Menu</mat-toolbar>
+        <mat-toolbar color="primary">
+             <img src="../assets/images/pace.jpg" alt="‘PACE-THE FUTURE OF PERSONAL DEVELOPMENT" style="height: 40px; margin-right: 10px;">
+        </mat-toolbar>
         <mat-nav-list>
             <a mat-list-item *ngFor="let item of navItems; let i= index;" [ngClass]="{'active': i === 0}"
                 [href]="item.url">
