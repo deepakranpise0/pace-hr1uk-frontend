@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { HomeComponent } from './home/home.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, map, shareReplay } from 'rxjs';
+import { Observable, filter, map, shareReplay } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,8 +35,9 @@ import { MatMenuModule } from '@angular/material/menu';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'pace-hr1-uk-frontend';
+  public activeIndex: number = 0;
   private breakpointObserver = inject(BreakpointObserver);
 
   public navItems: NavLinksModel[] = NavItemsContant;
@@ -47,4 +48,20 @@ export class AppComponent {
       map((result) => result.matches),
       shareReplay()
     );
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.router.events
+      .pipe(
+        filter(
+          (event: any): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe((event: NavigationEnd) => {
+        this.activeIndex = this.navItems.findIndex((item) =>
+          event.url.includes(item.url)
+        );
+      });
+  }
 }

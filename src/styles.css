@@ -47,8 +47,12 @@ body {
     }
 }
 
+button {
+    text-transform: capitalize;
+}
+
 .mat-mdc-raised-button:not(:disabled) {
-    background-color: #5265d1;
+    background-color: #1a95e6 !important;
     border: 1px solid #485ed2;
 }
 
@@ -71,4 +75,31 @@ main {
             }
         }
     }
+
+    .mat-h1 {
+        text-transform: capitalize;
+        margin: 0 0 5px !important;
+        padding-left: 16px;
+        font: 500 27px/32px Roboto, sans-serif !important;
+    }
+}
+
+.mat-mdc-dialog-title {
+    text-transform: capitalize;
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+.mdc-dialog__actions {
+    display: flex;
+    justify-content: end !important;
+    padding-right: 24px !important;
+    padding-bottom: 20px !important;
+    padding-top: 0 !important;
+}
+
+.mat-mdc-dialog-container .mat-mdc-dialog-title+.mat-mdc-dialog-content {
+    padding-bottom: 4px;
 }

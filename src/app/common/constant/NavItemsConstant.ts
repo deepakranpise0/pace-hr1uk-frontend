@@ -1,3 +1,4 @@
+import { MasterDataType } from '../enum/AppEnum';
 import { UserTypeConstant } from '../enum/UserTypeConstant';
 import { NavLinksModel } from '../models/NavLinkModel';
 
@@ -7,14 +8,14 @@ export const NavItemsContant: NavLinksModel[] = [
     roles: [UserTypeConstant.ADMIN],
     subItems: [],
     icon: 'domain',
-    url: '/',
+    url: '/master/' + MasterDataType.DOMAIN,
   },
   {
     label: 'Section',
     roles: [UserTypeConstant.ADMIN],
     subItems: [],
     icon: 'book',
-    url: '/',
+    url: '/master/' + MasterDataType.SECTION,
   },
   {
     label: 'Questions',
@@ -22,5 +23,12 @@ export const NavItemsContant: NavLinksModel[] = [
     subItems: [],
     icon: 'question_answer',
     url: '/',
+  },
+  {
+    label: 'Ratings',
+    roles: [UserTypeConstant.ADMIN],
+    subItems: [],
+    icon: 'rate_review',
+    url: '/ratings',
   },
 ];

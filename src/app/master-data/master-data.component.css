@@ -1,0 +1,45 @@
+main {
+
+    /* padding: 16px; */
+    .add-btn {
+        display: flex;
+        justify-content: end;
+        padding: 16px 16px 0 0;
+    }
+
+
+}
+.table-container{
+    padding: 16px;
+}
+table {
+
+    .mat-mdc-header-cell {
+        background-color: #3662a0 !important;
+    }
+
+    .mdc-data-table__header-cell {
+        color: #fff;
+    }
+
+    tr {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e9ecf2;
+        /* Set your desired color for even cells */
+    }
+
+    tr:nth-child(odd) {
+        background-color: #f9f9f9;
+        /* Set your desired color for odd rows */
+    }
+
+    .mat-mdc-paginator-container {
+        background: #efefef !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+    }
+}

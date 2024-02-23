@@ -8,7 +8,7 @@ main {
         justify-content: space-between;
 
         .question {
-            margin-top: 11px;
+            margin-top: 8px;
             flex-grow: 2;
             width: 60%;
         }
@@ -54,10 +54,10 @@ main {
 
     .star-icon {
         color: #070845;
-        height: 40px;
-        width: 40px;
+        height: 35px;
+        width: 35px;
         /* padding-left: 9px; */
-        font-size: 40px;
+        font-size: 35px;
         /* padding-top: 7px; */
         margin: 5px;
     }

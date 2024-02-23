@@ -22,7 +22,8 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: rgb(243 243 246);
+    /* background-color: rgb(243 243 246); */
+    background-color: #77bce9;
 
 }
 
@@ -98,4 +99,5 @@
 .active {
     /* background: #d8e6e6; */
     background-color: #e0e0e5;
+    border-left: 4px solid #5d94db;
 }
