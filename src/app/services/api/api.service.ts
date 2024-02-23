@@ -37,14 +37,16 @@ export class ApiService {
     return this.http.get<T>(url).pipe(catchError(this.handleError));
   }
 
-  async post<T, U>(endpoint: string, data: U){
+  post<T, U>(endpoint: string, data: U): Observable<T> {
     const url = `${this.baseUrl}/${endpoint}`;
-    console.log(data);
-    return await this.http.post<T>(url, data).pipe(catchError(this.handleError));
+
+    return this.http
+      .post<T>(url, data)
+      .pipe(catchError(this.handleError));
   }
 
-  isLoggedIn() { 
+  isLoggedIn() {
     this.isUserLoggedIn = true;
-    return true
+    return true;
   }
 }

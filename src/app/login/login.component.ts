@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      email: ['manedeep2001@gmail.com', [Validators.required, Validators.email]],
+      password: ['123', Validators.required],
     });
   }
 
@@ -43,18 +43,18 @@ export class LoginComponent implements OnInit {
       //   console.log(data);
       // }
       console.log(this.loginForm.value);
-      (
-        await this._apiService.post(APIEnum.LOGIN, this.loginForm.value)
-      ).subscribe(
-        (res: any) => {
-          if (res) {
-            console.log(res);
+      this._apiService
+        .post(APIEnum.LOGIN, this.loginForm.value as LoginModel)
+        .subscribe(
+          (res: any) => {
+            if (res) {
+              console.log(res);
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
     }
   }
 }
