@@ -66,7 +66,11 @@
     z-index: 9999;
 }
 
-
+.toolbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
 .user-box .user-img {
     position: relative;
