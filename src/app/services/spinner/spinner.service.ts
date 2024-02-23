@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SpinnerService {
-  public spinner: boolean = true;
+  public spinner: boolean = false;
 
   constructor() {}
 
