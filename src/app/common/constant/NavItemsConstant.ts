@@ -18,11 +18,11 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/master/' + MasterDataType.SECTION,
   },
   {
-    label: 'Questions',
+    label: 'Assessment Type',
     roles: [UserTypeConstant.ADMIN],
     subItems: [],
-    icon: 'question_answer',
-    url: '/',
+    icon: 'assessment',
+    url: '/master/' + MasterDataType.ASSESSMENT_TYPE,
   },
   {
     label: 'Ratings',
@@ -30,5 +30,12 @@ export const NavItemsContant: NavLinksModel[] = [
     subItems: [],
     icon: 'rate_review',
     url: '/ratings',
+  },
+  {
+    label: 'Questions',
+    roles: [UserTypeConstant.ADMIN],
+    subItems: [],
+    icon: 'question_answer',
+    url: '/',
   },
 ];

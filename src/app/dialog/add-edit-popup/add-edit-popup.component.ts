@@ -23,6 +23,9 @@ import {
   MasterDataType,
 } from 'src/app/common/enum/AppEnum';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api/api.service';
+import { APIEnum } from 'src/app/common/enum/APIEnum';
+import { MasterDataModel } from 'src/app/common/models/MasterDataModel';
 
 export interface DialogData {
   type: MasterDataType;
@@ -57,7 +60,8 @@ export class AddEditPopupComponent {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEditPopupComponent>,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private _apiService: ApiService
   ) {}
 
   onNoClick(): void {
@@ -66,30 +70,11 @@ export class AddEditPopupComponent {
 
   public onSubmit() {
     if (this.masterForm.valid) {
-      const formModel: MasterDataType = this.masterForm
-        .value as unknown as MasterDataType;
+      const formModel: MasterDataModel = this.masterForm
+        .value as unknown as MasterDataModel;
+      formModel.masterDataType = this.data.type;
       console.log(formModel);
-
-      // this._apiService
-      //   .post(
-      //     this.data.type === 'Add'
-      //       ? APIConstant.EDIT_MEDICALTEAM
-      //       : APIConstant.ADD_MEDICALTEAM,
-      //       formModel
-      //   )
-      //   .subscribe(
-      //     (res: any) => {
-      //       if (res && res.status) {
-      //         this.router.navigate(['/medical-team']);
-      //       } else {
-      //         // this.showSpinner = false;
-      //       }
-      //     },
-      //     (error: any) => {
-      //       // this.showSpinner = false;
-      //       console.error('Operation failed', error);
-      //     }
-      //   );
+      this.dialogRef.close(formModel);
     }
   }
 }

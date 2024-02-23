@@ -1,6 +1,7 @@
 export enum MasterDataType {
   DOMAIN = 'domain',
   SECTION = 'section',
+  ASSESSMENT_TYPE = 'assessmentType',
 }
 
 export enum MasterDataFormType {

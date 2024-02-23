@@ -14,18 +14,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditPopupComponent } from '../dialog/add-edit-popup/add-edit-popup.component';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AppConstant } from '../common/constant/AppConstant';
+import { MasterDataList } from '../common/models/MasterDataList';
+import { MasterDataModel } from '../common/models/MasterDataModel';
+import { SpinnerService } from '../services/spinner/spinner.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-];
 @Component({
   selector: 'pace-hr1-uk-frontend-master-data',
   standalone: true,
@@ -44,8 +37,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class MasterDataComponent implements OnInit {
   public masterType!: MasterDataType;
-  displayedColumns: string[] = ['position', 'name', 'weight'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  public masterDataList!: MasterDataList[];
+  public action = MasterDataFormType.ADD;
+  displayedColumns: string[] = ['no', 'name', 'description'];
+  dataSource = new MatTableDataSource<MasterDataList>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -53,7 +48,8 @@ export class MasterDataComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
-    private _apiService: ApiService
+    private _apiService: ApiService,
+    private _spinner: SpinnerService
   ) {}
 
   ngOnInit() {
@@ -65,7 +61,7 @@ export class MasterDataComponent implements OnInit {
         Object.values(MasterDataType).includes(typeParam as MasterDataType)
       ) {
         this.masterType = typeParam as MasterDataType;
-        this.fetchMasterList(this.masterType);
+        this.fetchMasterList();
       } else {
         // Invalid type, navigate back to home
         this.router.navigate(['/']);
@@ -76,15 +72,24 @@ export class MasterDataComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  private fetchMasterList(masterType: MasterDataType) {
-    this._apiService.get(APIEnum.GET_MASTER + masterType).subscribe(
+  public getTitle(): string {
+    return this.masterType === MasterDataType.ASSESSMENT_TYPE
+      ? AppConstant.Assessment_Type
+      : this.masterType;
+  }
+
+  private fetchMasterList() {
+    this._spinner.showSpinner();
+    this._apiService.get(APIEnum.GET_MASTER + this.masterType).subscribe(
       (res: any) => {
-        if (res && res.status) {
-          console.log(res.message);
+        if (res) {
+          this.dataSource.data = res;
+          this._spinner.hideSpinner();
         }
       },
       (error) => {
         console.log(error);
+        this._spinner.hideSpinner();
       }
     );
   }
@@ -96,9 +101,29 @@ export class MasterDataComponent implements OnInit {
       autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+    dialogRef.afterClosed().subscribe((formModel) => {
+      this.handleDialogSubmit(formModel);
     });
+  }
+
+  public handleDialogSubmit(formModel: MasterDataModel) {
+    formModel.masterDataType = this.masterType;
+    const apiMethod =
+      this.action === MasterDataFormType.ADD ? 'post' : 'update';
+    this._spinner.showSpinner();
+    (this._apiService as any)
+      [apiMethod](APIEnum.CREATE_MASTER, formModel)
+      .subscribe(
+        (res: any) => {
+          if (res) {
+            this.fetchMasterList();
+            this._spinner.hideSpinner();
+          }
+        },
+        (error: any) => {
+          console.error('Operation failed', error);
+          this._spinner.hideSpinner();
+        }
+      );
   }
 }

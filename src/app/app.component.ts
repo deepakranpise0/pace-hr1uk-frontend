@@ -14,6 +14,8 @@ import { NavItemsContant } from './common/constant/NavItemsConstant';
 import { NavLinksModel } from './common/models/NavLinkModel';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerService } from './services/spinner/spinner.service';
 
 @Component({
   standalone: true,
@@ -30,6 +32,7 @@ import { MatMenuModule } from '@angular/material/menu';
     AsyncPipe,
     MatCardModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
   ],
   selector: 'pace-hr1-uk-frontend-root',
   templateUrl: './app.component.html',
@@ -49,7 +52,7 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, public _spinner: SpinnerService) {}
 
   ngOnInit() {
     this.router.events

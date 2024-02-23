@@ -34,16 +34,12 @@ export class ApiService {
 
   get<T>(endpoint: string): Observable<T> {
     const url = `${this.baseUrl}/${endpoint}`;
-    return this.http
-      .get<T>(url, this.httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.http.get<T>(url).pipe(catchError(this.handleError));
   }
 
   post<T, U>(endpoint: string, data: U): Observable<T> {
     const url = `${this.baseUrl}/${endpoint}`;
 
-    return this.http
-      .post<T>(url, data, this.httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.http.post<T>(url, data).pipe(catchError(this.handleError));
   }
 }
