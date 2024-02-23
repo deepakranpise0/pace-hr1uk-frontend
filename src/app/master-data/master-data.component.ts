@@ -52,7 +52,8 @@ export class MasterDataComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog // private _apiService: ApiService,
+    public dialog: MatDialog,
+    private _apiService: ApiService
   ) {}
 
   ngOnInit() {
@@ -64,7 +65,7 @@ export class MasterDataComponent implements OnInit {
         Object.values(MasterDataType).includes(typeParam as MasterDataType)
       ) {
         this.masterType = typeParam as MasterDataType;
-        // this.fetchMasterList(this.masterType);
+        this.fetchMasterList(this.masterType);
       } else {
         // Invalid type, navigate back to home
         this.router.navigate(['/']);
@@ -75,18 +76,18 @@ export class MasterDataComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  // private fetchMasterList(masterType: MasterDataType) {
-  //   this._apiService.get(APIEnum.GET_MASTER + masterType).subscribe(
-  //     (res: any) => {
-  //       if (res && res.status) {
-  //         console.log(res.message);
-  //       }
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+  private fetchMasterList(masterType: MasterDataType) {
+    this._apiService.get(APIEnum.GET_MASTER + masterType).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          console.log(res.message);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddEditPopupComponent, {
