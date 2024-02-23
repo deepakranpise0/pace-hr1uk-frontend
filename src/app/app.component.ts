@@ -16,6 +16,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerService } from './services/spinner/spinner.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { ApiService } from './services/api/api.service';
 
 @Component({
   standalone: true,
@@ -26,13 +30,16 @@ import { SpinnerService } from './services/spinner/spinner.service';
     HomeComponent,
     MatToolbarModule,
     MatButtonModule,
+    MatCardModule,
+    MatInputModule,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    MatFormFieldModule,
+    FormsModule,
     AsyncPipe,
-    MatCardModule,
     MatMenuModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule  
   ],
   selector: 'pace-hr1-uk-frontend-root',
   templateUrl: './app.component.html',
@@ -52,8 +59,7 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private router: Router, public _spinner: SpinnerService) {}
-
+  constructor(private router: Router, public _spinner: SpinnerService,public authService:ApiService) {}
   ngOnInit() {
     this.router.events
       .pipe(
