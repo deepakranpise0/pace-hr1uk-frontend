@@ -9,9 +9,11 @@ main {
 
 
 }
-.table-container{
+
+.table-container {
     padding: 16px;
 }
+
 table {
 
     .mat-mdc-header-cell {
@@ -41,5 +43,23 @@ table {
         background: #efefef !important;
         font-size: 13px !important;
         font-weight: 500 !important;
+    }
+}
+
+.icon-container {
+    display: flex;
+    gap: 4px;
+
+    button {
+        border: none;
+        background: none;
+    }
+
+    .edit {
+        color: #2b5186;
+    }
+
+    .delete {
+        color: #ee1f10;
     }
 }

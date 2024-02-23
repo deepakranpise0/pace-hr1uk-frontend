@@ -39,7 +39,7 @@ export class MasterDataComponent implements OnInit {
   public masterType!: MasterDataType;
   public masterDataList!: MasterDataList[];
   public action = MasterDataFormType.ADD;
-  displayedColumns: string[] = ['no', 'name', 'description'];
+  displayedColumns: string[] = ['no', 'name', 'description', 'action'];
   dataSource = new MatTableDataSource<MasterDataList>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -94,9 +94,17 @@ export class MasterDataComponent implements OnInit {
     );
   }
 
-  openDialog(): void {
+  openDialog(data: any = null): void {
+    let dialogData = {
+      action: MasterDataFormType.ADD,
+      type: this.masterType,
+    };
+    if (data) {
+      dialogData.action = MasterDataFormType.UPDATE;
+      dialogData = { ...dialogData, ...data };
+    }
     const dialogRef = this.dialog.open(AddEditPopupComponent, {
-      data: { action: MasterDataFormType.ADD, type: this.masterType },
+      data: dialogData,
       width: '600px', // Set width to 600 pixels
       autoFocus: false,
     });
@@ -126,4 +134,9 @@ export class MasterDataComponent implements OnInit {
         }
       );
   }
+  public editData(data: MasterDataModel) {
+    this.openDialog(data);
+  }
+
+  public deleteData(data: MasterDataModel) {}
 }
