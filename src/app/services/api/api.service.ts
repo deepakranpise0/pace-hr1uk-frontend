@@ -12,7 +12,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class ApiService {
   private baseUrl = environment.apiUrl;
-
+  isUserLoggedIn: Boolean = false;
   constructor(private http: HttpClient) {}
 
   public httpOptions = {
@@ -37,9 +37,14 @@ export class ApiService {
     return this.http.get<T>(url).pipe(catchError(this.handleError));
   }
 
-  post<T, U>(endpoint: string, data: U): Observable<T> {
+  async post<T, U>(endpoint: string, data: U){
     const url = `${this.baseUrl}/${endpoint}`;
+    console.log(data);
+    return await this.http.post<T>(url, data).pipe(catchError(this.handleError));
+  }
 
-    return this.http.post<T>(url, data).pipe(catchError(this.handleError));
+  isLoggedIn() { 
+    this.isUserLoggedIn = true;
+    return true
   }
 }
