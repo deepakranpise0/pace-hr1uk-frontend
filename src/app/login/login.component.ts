@@ -1,54 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { ApiService } from '../services/api/api.service';
+import { Router } from '@angular/router';
+
 import { APIEnum } from '../common/enum/APIEnum';
 import { LoginModel } from '../common/models/Login';
+import { ApiService } from '../services/api/api.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  standalone: true,
-  imports: [MatCardModule, MatInputModule, MatIconModule, ReactiveFormsModule],
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
   constructor(
-    private formBuilder: FormBuilder,
-    private _apiService: ApiService
+      private formBuilder: FormBuilder,
+      private _apiService: ApiService,
+      private router:Router
+    
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['manedeep2001@gmail.com', [Validators.required, Validators.email]],
-      password: ['123', Validators.required],
+      email: ['deepakranpise0@gmail.com', [Validators.required, Validators.email]],
+      password: ['Deepak@0613', Validators.required],
     });
   }
 
   async onSubmit() {
     if (this.loginForm.valid) {
-      // const data = await this._apiService.post(
-      //   APIEnum.LOGIN,
-      //   this.loginForm.value
-      // );
-      // if (data) {
-      //   console.log(data);
-      // }
       console.log(this.loginForm.value);
       this._apiService
         .post(APIEnum.LOGIN, this.loginForm.value as LoginModel)
         .subscribe(
           (res: any) => {
             if (res) {
-              console.log(res);
+                console.log(res);
+              this._apiService.setAccessToken(res.access_token);
+                this.router.navigate(['/home'])
             }
           },
           (error) => {

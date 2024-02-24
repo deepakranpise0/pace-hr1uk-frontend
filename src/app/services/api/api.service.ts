@@ -4,7 +4,13 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+
+import {
+  catchError,
+  Observable,
+  throwError,
+} from 'rxjs';
+
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -13,6 +19,7 @@ import { environment } from '../../../../environments/environment';
 export class ApiService {
   private baseUrl = environment.apiUrl;
   isUserLoggedIn: Boolean = false;
+  accessToken='access_token';
   constructor(private http: HttpClient) {}
 
   public httpOptions = {
@@ -48,5 +55,17 @@ export class ApiService {
   isLoggedIn() {
     this.isUserLoggedIn = true;
     return true;
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.accessToken);
+  }
+
+  getAccessToken(): string | null {
+    return localStorage.getItem(this.accessToken);
+  }
+
+  setAccessToken(token: string): void {
+    localStorage.setItem(this.accessToken, token);
   }
 }

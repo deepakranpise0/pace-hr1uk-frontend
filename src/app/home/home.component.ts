@@ -1,26 +1,18 @@
-import { Component, inject } from '@angular/core';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import {
+  BreakpointObserver,
+  Breakpoints,
+} from '@angular/cdk/layout';
+import {
+  Component,
+  inject,
+} from '@angular/core';
+
 import { map } from 'rxjs/operators';
-import { AsyncPipe } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'pace-hr1-uk-frontend-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    MatGridListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule
-  ]
+  styleUrl: './home.component.css'
 })
 export class HomeComponent {
   private breakpointObserver = inject(BreakpointObserver);

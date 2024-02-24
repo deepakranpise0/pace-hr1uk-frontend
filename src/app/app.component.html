@@ -1,31 +1,10 @@
-<div class="spinner-overlay" *ngIf="_spinner.spinner">
-    <mat-spinner color="primary" diameter="50"></mat-spinner>
-</div>
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <mat-toolbar color="primary">
-            <img src="../assets/images/pace.jpg" alt="‘PACE-THE FUTURE OF PERSONAL DEVELOPMENT"
-                style="height: 40px; margin-right: 10px;">
-        </mat-toolbar>
-        <mat-nav-list *ngIf="authService.isUserLoggedIn">
-            <a mat-list-item *ngFor="let item of navItems; let i= index;"
-                [ngClass]="i === activeIndex ? 'active' : 'inactive'" [href]="item.url">
-                <mat-icon>{{item.icon}}</mat-icon>
-                <span>
-                    {{item.label}}
-                </span>
-            </a>
-        </mat-nav-list>
-    </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar color="primary">
             <div class="toolbar-logo">
                 <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
                     <mat-icon class="hamburger" aria-label="Side nav toggle icon">menu</mat-icon>
                 </button>
-                <img src="../assets/images/pace.jpg" alt="‘PACE-THE FUTURE OF PERSONAL DEVELOPMENT"
-                    style="height: 40px; margin-right: 10px;">
             </div>
 
             <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu" *ngIf="authService.isUserLoggedIn">
@@ -59,4 +38,24 @@
         </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
+   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+        <mat-toolbar color="primary">
+            <img src="../assets/images/pace.jpg" alt="‘PACE-THE FUTURE OF PERSONAL DEVELOPMENT"
+                style="height: 40px; margin-right: 10px;">
+        </mat-toolbar>
+        <mat-nav-list *ngIf="authService.isUserLoggedIn">
+            <a mat-list-item *ngFor="let item of navItems; let i= index;"
+                [ngClass]="i === activeIndex ? 'active' : 'inactive'" [href]="item.url">
+                <mat-icon>{{item.icon}}</mat-icon>
+                <span>
+                    {{item.label}}
+                </span>
+            </a>
+        </mat-nav-list>
+            </mat-sidenav>  
 </mat-sidenav-container>
+
+<!-- <div class="spinner-overlay" *ngIf="_spinner.spinner">
+    <mat-spinner color="primary" diameter="50"></mat-spinner>
+</div> -->

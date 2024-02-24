@@ -1,37 +1,32 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MasterDataFormType, MasterDataType } from '../common/enum/AppEnum';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
-import { ApiService } from '../services/api/api.service';
-import { APIEnum } from '../common/enum/APIEnum';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddEditPopupComponent } from '../dialog/add-edit-popup/add-edit-popup.component';
-import { FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import {
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
+
 import { AppConstant } from '../common/constant/AppConstant';
+import { APIEnum } from '../common/enum/APIEnum';
+import {
+  MasterDataFormType,
+  MasterDataType,
+} from '../common/enum/AppEnum';
 import { MasterDataList } from '../common/models/MasterDataList';
 import { MasterDataModel } from '../common/models/MasterDataModel';
+import {
+  AddEditPopupComponent,
+} from '../dialog/add-edit-popup/add-edit-popup.component';
+import { ApiService } from '../services/api/api.service';
 import { SpinnerService } from '../services/spinner/spinner.service';
 
 @Component({
   selector: 'pace-hr1-uk-frontend-master-data',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatDividerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatIconModule,
-    HttpClientModule,
-    MatButtonModule,
-  ],
   templateUrl: './master-data.component.html',
   styleUrl: './master-data.component.css',
 })
