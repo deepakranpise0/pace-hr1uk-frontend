@@ -1,11 +1,28 @@
-import { Component, Inject, OnInit, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, filter, map, shareReplay } from 'rxjs';
+import {
+  BreakpointObserver,
+  Breakpoints,
+} from '@angular/cdk/layout';
+import {
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
+import {
+  NavigationEnd,
+  Router,
+} from '@angular/router';
+
+import {
+  filter,
+  map,
+  Observable,
+  shareReplay,
+} from 'rxjs';
+
 import { NavItemsContant } from './common/constant/NavItemsConstant';
 import { NavLinksModel } from './common/models/NavLinkModel';
-import { SpinnerService } from './services/spinner/spinner.service';
 import { ApiService } from './services/api/api.service';
+import { SpinnerService } from './services/spinner/spinner.service';
 
 @Component({
   selector: 'pace-hr1-uk-frontend-root',
@@ -17,7 +34,7 @@ export class AppComponent implements OnInit {
   public activeIndex: number = 0;
   private breakpointObserver = inject(BreakpointObserver);
 
-  public navItems: NavLinksModel[] = NavItemsContant;
+  public navItems: NavLinksModel[] = NavItemsContant.filter((a)=>a.roles===this.authService.getUserRole());
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -39,5 +56,9 @@ export class AppComponent implements OnInit {
           event.url.includes(item.url)
         );
       });
+  }
+
+  logout() { 
+    this.authService.logout();
   }
 }

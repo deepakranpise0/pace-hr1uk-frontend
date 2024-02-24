@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
         .subscribe(
           (res: any) => {
             if (res) {
-                console.log(res);
-              this._apiService.setAccessToken(res.access_token);
-                this.router.navigate(['/home'])
+              this._apiService.isUserLoggedIn = true;
+              this._apiService.setLocalStorage(res.access_token,res.role);
+              this.router.navigate(['/home']);
             }
           },
           (error) => {

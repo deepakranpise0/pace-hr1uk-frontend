@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container"  *ngIf="authService.isUserLoggedIn">
     <mat-sidenav-content>
         <mat-toolbar color="primary">
             <div class="toolbar-logo">
@@ -29,7 +29,7 @@
                         <mat-icon>account_circle</mat-icon>
                         <span>Accounts</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="logout()">
                         <mat-icon>exit_to_app</mat-icon>
                         <span>Logout</span>
                     </button>
@@ -59,3 +59,7 @@
 <!-- <div class="spinner-overlay" *ngIf="_spinner.spinner">
     <mat-spinner color="primary" diameter="50"></mat-spinner>
 </div> -->
+
+<div *ngIf="!authService.isUserLoggedIn">
+  <router-outlet></router-outlet> <!-- Display login component here -->
+</div>

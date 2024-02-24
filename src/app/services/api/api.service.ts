@@ -4,6 +4,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
   catchError,
@@ -19,8 +20,9 @@ import { environment } from '../../../../environments/environment';
 export class ApiService {
   private baseUrl = environment.apiUrl;
   isUserLoggedIn: Boolean = false;
-  accessToken='access_token';
-  constructor(private http: HttpClient) {}
+  accessToken = 'access_token';
+  userRole = "role";
+  constructor(private http: HttpClient,private route:Router) {}
 
   public httpOptions = {
     headers: new HttpHeaders({
@@ -52,20 +54,23 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  isLoggedIn() {
-    this.isUserLoggedIn = true;
-    return true;
-  }
-
   logout(): void {
     localStorage.removeItem(this.accessToken);
+    this.isUserLoggedIn = false;
+    this.route.navigate(['login']);
+
   }
 
   getAccessToken(): string | null {
     return localStorage.getItem(this.accessToken);
   }
 
-  setAccessToken(token: string): void {
+  getUserRole(): string | null {
+    return localStorage.getItem(this.userRole);
+  }
+
+  setLocalStorage(token: string,role:string): void {
     localStorage.setItem(this.accessToken, token);
+    localStorage.setItem(this.userRole, role);
   }
 }
