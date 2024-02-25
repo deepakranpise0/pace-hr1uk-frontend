@@ -36,6 +36,6 @@ export const NavItemsContant: NavLinksModel[] = [
     roles: UserTypeConstant.ADMIN,
     subItems: [],
     icon: 'question_answer',
-    url: '/',
+    url: '/master/' + MasterDataType.QUESTION,
   },
 ];

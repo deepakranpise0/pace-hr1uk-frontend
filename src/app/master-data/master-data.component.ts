@@ -1,29 +1,18 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AppConstant } from '../common/constant/AppConstant';
 import { APIEnum } from '../common/enum/APIEnum';
-import {
-  MasterDataFormType,
-  MasterDataType,
-} from '../common/enum/AppEnum';
+import { MasterDataFormType, MasterDataType } from '../common/enum/AppEnum';
 import { MasterDataList } from '../common/models/MasterDataList';
 import { MasterDataModel } from '../common/models/MasterDataModel';
-import {
-  AddEditPopupComponent,
-} from '../dialog/add-edit-popup/add-edit-popup.component';
+import { AddEditPopupComponent } from '../dialog/add-edit-popup/add-edit-popup.component';
 import { ApiService } from '../services/api/api.service';
 import { SpinnerService } from '../services/spinner/spinner.service';
+import { QuestionDataList } from '../common/models/QuestionDataList';
 
 @Component({
   selector: 'pace-hr1-uk-frontend-master-data',
@@ -32,10 +21,13 @@ import { SpinnerService } from '../services/spinner/spinner.service';
 })
 export class MasterDataComponent implements OnInit {
   public masterType!: MasterDataType;
+  public MasterDataTypes = MasterDataType;
   public masterDataList!: MasterDataList[];
   public action = MasterDataFormType.ADD;
+  public isQuestionsSelected: boolean = false;
   displayedColumns: string[] = ['no', 'name', 'description', 'action'];
-  dataSource = new MatTableDataSource<MasterDataList>();
+  masterData = new MatTableDataSource<MasterDataList>();
+  questionsData = new MatTableDataSource<QuestionDataList>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -56,6 +48,12 @@ export class MasterDataComponent implements OnInit {
         Object.values(MasterDataType).includes(typeParam as MasterDataType)
       ) {
         this.masterType = typeParam as MasterDataType;
+        if (this.masterType === MasterDataType.QUESTION) {
+          this.isQuestionsSelected = true;
+          console.log(this.displayedColumns.slice(2));
+          this.displayedColumns.splice(2, 0, 'section');
+          console.log(this.displayedColumns);
+        }
         this.fetchMasterList();
       } else {
         // Invalid type, navigate back to home
@@ -64,7 +62,10 @@ export class MasterDataComponent implements OnInit {
     });
   }
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    if (this.masterType === MasterDataType.QUESTION) 
+      this.questionsData.paginator = this.paginator;
+    else
+      this.masterData.paginator = this.paginator;
   }
 
   public getTitle(): string {
@@ -75,10 +76,16 @@ export class MasterDataComponent implements OnInit {
 
   private fetchMasterList() {
     this._spinner.showSpinner();
-    this._apiService.get(APIEnum.GET_MASTER + this.masterType).subscribe(
+    let endPoint = APIEnum.GET_MASTER + this.masterType;
+    if (this.masterType === MasterDataType.QUESTION) {
+      endPoint = APIEnum.GET_Questions;
+    }
+    this._apiService.get(endPoint).subscribe(
       (res: any) => {
         if (res) {
-          this.dataSource.data = res;
+          if (this.masterType === MasterDataType.QUESTION)
+            this.questionsData.data = res;
+          else this.masterData.data = res;
           this._spinner.hideSpinner();
         }
       },
@@ -93,10 +100,11 @@ export class MasterDataComponent implements OnInit {
     let dialogData = {
       action: MasterDataFormType.ADD,
       type: this.masterType,
+      editData: null,
     };
     if (data) {
       dialogData.action = MasterDataFormType.UPDATE;
-      dialogData = { ...dialogData, ...data };
+      dialogData.editData = data;
     }
     const dialogRef = this.dialog.open(AddEditPopupComponent, {
       data: dialogData,
@@ -105,33 +113,51 @@ export class MasterDataComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((formModel) => {
-      this.handleDialogSubmit(formModel);
+      console.log(formModel);
+      let id = '';
+      if (this.action === MasterDataFormType.UPDATE) {
+        id = formModel.id;
+        formModel = formModel.formModel;
+      }
+      this.handleDialogSubmit(formModel, id);
     });
   }
 
-  public handleDialogSubmit(formModel: MasterDataModel) {
+  public handleDialogSubmit(formModel: MasterDataModel, id: string = '') {
     formModel.masterDataType = this.masterType;
-    const apiMethod =
-      this.action === MasterDataFormType.ADD ? 'post' : 'update';
+    const apiMethod = this.action === MasterDataFormType.ADD ? 'post' : 'post';
     this._spinner.showSpinner();
-    (this._apiService as any)
-      [apiMethod](APIEnum.CREATE_MASTER, formModel)
-      .subscribe(
-        (res: any) => {
-          if (res) {
-            this.fetchMasterList();
-            this._spinner.hideSpinner();
-          }
-        },
-        (error: any) => {
-          console.error('Operation failed', error);
+    this._apiService.post(APIEnum.CREATE_MASTER, formModel, id).subscribe(
+      (res: any) => {
+        if (res) {
+          this.fetchMasterList();
           this._spinner.hideSpinner();
         }
-      );
+      },
+      (error: any) => {
+        console.error('Operation failed', error);
+        this._spinner.hideSpinner();
+      }
+    );
   }
   public editData(data: MasterDataModel) {
+    this.action = MasterDataFormType.UPDATE;
     this.openDialog(data);
   }
 
-  public deleteData(data: MasterDataModel) {}
+  public deleteData(id: string) {
+    this._spinner.showSpinner();
+    this._apiService.delete(APIEnum.CREATE_MASTER + `/${id}`).subscribe(
+      (res: any) => {
+        if (res) {
+          this.fetchMasterList();
+          this._spinner.hideSpinner();
+        }
+      },
+      (error: any) => {
+        console.error('Operation failed', error);
+        this._spinner.hideSpinner();
+      }
+    );
+  }
 }

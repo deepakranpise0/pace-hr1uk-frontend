@@ -35,10 +35,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {
-  StarRatingConfigService,
-  StarRatingModule,
-} from 'angular-star-rating';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes.modules';
@@ -88,10 +84,8 @@ import { RatingComponent } from './rating/rating.component';
       MatDialogActions,
       MatDialogClose,
       MatProgressBarModule,
-      StarRatingModule
   ],
   providers: [
-    StarRatingConfigService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
