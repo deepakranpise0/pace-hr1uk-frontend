@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
+  BehaviorSubject,
   catchError,
   Observable,
   throwError,
@@ -19,7 +20,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class ApiService {
   private baseUrl = environment.apiUrl;
-  isUserLoggedIn: Boolean = false;
+  public isUserLoggedIn = new BehaviorSubject<boolean>(false);
   accessToken = 'access_token';
   userRole = "role";
   constructor(private http: HttpClient,private route:Router) {}
@@ -29,6 +30,10 @@ export class ApiService {
       Token: `Bearer `,
     }),
   };
+
+  get isLoggedIn() {
+    return this.isUserLoggedIn.asObservable();
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -56,7 +61,7 @@ export class ApiService {
 
   logout(): void {
     localStorage.removeItem(this.accessToken);
-    this.isUserLoggedIn = false;
+    this.isUserLoggedIn.next(false);
     this.route.navigate(['login']);
 
   }

@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
         .subscribe(
           (res: any) => {
             if (res) {
-              this._apiService.isUserLoggedIn = true;
+              this._apiService.isUserLoggedIn.next(true);
               this._apiService.setLocalStorage(res.access_token,res.role);
-              this.router.navigate(['/home']);
+              this.router.navigate(['home']);
             }
           },
           (error) => {

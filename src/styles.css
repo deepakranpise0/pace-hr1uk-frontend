@@ -52,8 +52,8 @@ button {
 }
 
 .mat-mdc-raised-button:not(:disabled) {
-    background-color: #1a95e6 !important;
-    border: 1px solid #485ed2;
+    background-color: #5265d1 !important;
+    border: 1px solid #5265d1;
     text-transform: capitalize;
 }
 

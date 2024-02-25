@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSelectionListChange } from '@angular/material/list';
 
 import {
   QuestionRatingModel,
@@ -50,6 +51,7 @@ export class RatingComponent {
     },
   ];
 
+
   fillStars(questionModel: QuestionRatingModel, starNumber: number) {
     if (questionModel.ratings === 0) {
       questionModel.filledStars = starNumber;
@@ -87,5 +89,9 @@ export class RatingComponent {
     if(this.currentSetIndex > 0) {
       this.currentSetIndex -= 1;
     }
+  }
+
+   onSelectionChange(event: MatSelectionListChange) {
+   console.log(event)
   }
 }

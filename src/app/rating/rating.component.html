@@ -1,32 +1,32 @@
 <main>
     <mat-card>
-        <mat-card-header>
-            <h3>
+        <mat-card-header class="header">
+            <h3 >
                 {{questionsSet[currentSetIndex]?.domain}}
             </h3>
         </mat-card-header>
-        <div class="divider-container">
+        <!-- <div class="divider-container">
             <mat-divider></mat-divider>
-        </div>
-        <mat-card-content>
-            <div class="question-container" *ngFor="let question of questionsSet[currentSetIndex]?.questions; let j = index">
-                <!-- <ng-template *ngFor="let question of questionSet.questions; let j = index"> -->
-                <div class="question">
-                    <h3>
-                        <span>Q{{j+1}}.</span>
-                        {{question?.question}}
-                    </h3>
-                </div>
-                <div class="stars d-flex flex-row g-15" (mouseleave)="resetStars(question)">
-                    <a href="#" *ngFor="let i of [1,2,3,4,5]" (mouseenter)="fillStars(question,i)"
-                        (click)="handleStars($event, i, question)">
-                        <mat-icon class="star-icon"
-                            [ngClass]="{'star-marked': i <= question.filledStars || i === question.ratings}">
-                            {{ i <= question.filledStars || i===question.ratings ? 'star' : 'star_border' }} </mat-icon>
-                    </a>
-                </div>
-                <!-- </ng-template> -->
-            </div>
+        </div> -->
+        <mat-card-content class="content">
+            <mat-list #questions>
+                @for (questions of questionsSet[currentSetIndex]?.questions; track questions) {
+                    <mat-list-item >
+                         <div class="flex-container highlight-on-hover center-content">
+                            <div class="left-content">{{questions.question}}</div>
+                            <div class="right-content" (mouseleave)="resetStars(questions)">
+                                <a href="#" *ngFor="let i of [1,2,3,4,5]" (mouseenter)="fillStars(questions,i)"
+                                    (click)="handleStars($event, i, questions)">
+                                    <mat-icon class="star-icon"
+                                        [ngClass]="{'star-marked': i <= questions.filledStars || i === questions.ratings}">
+                                        {{ i <= questions.filledStars || i===questions.ratings ? 'star' : 'star_border' }} 
+                                    </mat-icon>
+                                </a>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                }
+            </mat-list>
 
             <div class="action center g-15">
                 <button mat-stroked-button color="primary" [disabled]="currentSetIndex === 0"  (click)="handlePrevious()">Previous</button>

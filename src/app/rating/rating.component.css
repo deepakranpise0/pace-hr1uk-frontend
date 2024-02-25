@@ -31,15 +31,6 @@ main {
         }
     }
 
-    .stars {
-        flex-grow: 1;
-        display: flex;
-
-        a {
-            height: 50px;
-        }
-    }
-
     @media (max-width: 768px) {
         .question-container {
             flex-direction: column;
@@ -53,22 +44,57 @@ main {
     }
 
     .star-icon {
-        color: #070845;
-        height: 35px;
-        width: 35px;
-        /* padding-left: 9px; */
-        font-size: 35px;
-        /* padding-top: 7px; */
-        margin: 5px;
+        color: #ffd740;
+        height: 30px;
+        width: 30px;
+        font-size: 30px;
+        margin: 3px;
     }
 
     .star-marked {
-        color: rgb(240, 240, 53);
+        color: #ffd740;
     }
 
     .action {
         button {
             width: 100px;
         }
-    }
+    }  
+}
+.highlight-on-hover:hover {
+    background-color: #efefef; /* Change to desired highlight color */
+}
+
+.header {
+  background-color: #d5e2f247; /* Light background color for header */
+  display: flex;
+  justify-content: flex-start;
+}
+
+.content {
+  background-color: #f3f3f6; /* Light background color for content */
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.left-content{
+   width: 68%; /* Adjust as needed */
+  padding: 10px;  
+}
+.right-content {
+  width: 28%; /* Adjust as needed */
+  padding: 10px; /* Optional: Add padding for better spacing */
+}
+
+@media only screen and (max-width: 600px) {
+  .left-content,
+  .right-content {
+    width: 100%;
+  }
 }

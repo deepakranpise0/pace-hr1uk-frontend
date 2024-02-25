@@ -27,12 +27,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {
+  StarRatingConfigService,
+  StarRatingModule,
+} from 'angular-star-rating';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes.modules';
@@ -81,8 +87,11 @@ import { RatingComponent } from './rating/rating.component';
       MatDialogContent,
       MatDialogActions,
       MatDialogClose,
+      MatProgressBarModule,
+      StarRatingModule
   ],
-  providers:[
+  providers: [
+    StarRatingConfigService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
