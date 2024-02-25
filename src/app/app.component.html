@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container"  *ngIf="authService.isUserLoggedIn">
+<mat-sidenav-container class="sidenav-container"  *ngIf="isLoggedIn">
     <mat-sidenav-content>
         <mat-toolbar color="primary">
             <div class="toolbar-logo">
@@ -7,7 +7,7 @@
                 </button>
             </div>
 
-            <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu" *ngIf="authService.isUserLoggedIn">
+            <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
                 <a class="profile-icon"> <img src="https://app.teamedserv.com/assets/admin/images/users/avatar-1.jpg"
                         alt="user-img" class="img-circle user-img"></a>
                 <mat-menu #menu="matMenu" class="custom-menu">
@@ -44,7 +44,7 @@
             <img src="../assets/images/pace.jpg" alt="‘PACE-THE FUTURE OF PERSONAL DEVELOPMENT"
                 style="height: 40px; margin-right: 10px;">
         </mat-toolbar>
-        <mat-nav-list *ngIf="authService.isUserLoggedIn">
+        <mat-nav-list>
             <a mat-list-item *ngFor="let item of navItems; let i= index;"
                 [ngClass]="i === activeIndex ? 'active' : 'inactive'" [href]="item.url">
                 <mat-icon>{{item.icon}}</mat-icon>
@@ -60,6 +60,6 @@
     <mat-spinner color="primary" diameter="50"></mat-spinner>
 </div> -->
 
-<div *ngIf="!authService.isUserLoggedIn">
+<div *ngIf="!isLoggedIn">
   <router-outlet></router-outlet> <!-- Display login component here -->
 </div>

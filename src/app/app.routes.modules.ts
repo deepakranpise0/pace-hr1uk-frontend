@@ -5,17 +5,21 @@ import {
 } from '@angular/router';
 
 import { AuthGuard } from './auth.guard';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { MasterDataComponent } from './master-data/master-data.component';
-import { RatingComponent } from './rating/rating.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'master/:type', component: MasterDataComponent, canActivate: [AuthGuard] },
-  { path: 'ratings', component: RatingComponent, canActivate: [AuthGuard] },
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
+  { path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    canActivate: [AuthGuard] },
+  { path: 'master/:type',
+    loadChildren: () => import('./master-data/master-data.module').then(m => m.MaserDataModule),
+    canActivate: [AuthGuard] },
+  { path: 'ratings',
+    loadChildren: () => import('./rating/rating.module').then(m => m.RatingModule),
+    canActivate: [AuthGuard] },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  }
 ];
 
 @NgModule({

@@ -12,6 +12,8 @@ main {
 
 .table-container {
     padding: 16px;
+    height: 70vh; /* 70% of the viewport height */
+    overflow: auto;
 }
 
 table {
