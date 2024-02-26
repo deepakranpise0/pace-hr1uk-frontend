@@ -1,10 +1,3 @@
-.login-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 mat-card {
   max-width: 400px;
   width: 100%;
@@ -21,4 +14,40 @@ mat-form-field {
 
 mat-card-actions {
   justify-content: flex-end;
+}
+
+
+.login-container {
+  position: relative; /* Set the container position to relative */
+  height: 100vh; /* Set the height of the container to fill the viewport */
+  display: flex; /* Use flexbox for centering content */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+}
+
+.login-background {
+  position: absolute; /* Position the background image */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/images/hr1.jpg'); /* Path to your background image */
+  background-size: cover; /* Cover the entire container with the background image */
+  background-position: center; /* Center the background image within the container */
+  opacity: 0.8; /* Adjust the opacity of the background image */
+}
+
+.texture-overlay {
+  content: '';
+  position: absolute; /* Position the overlay */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+}
+
+.login-form-wrapper {
+  /* margin-left: auto; Align the wrapper container to the right */
+  /* max-width: 400px; Adjust the maximum width as needed */
 }

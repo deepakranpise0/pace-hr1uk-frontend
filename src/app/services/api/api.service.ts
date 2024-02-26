@@ -6,7 +6,12 @@ import {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  throwError,
+} from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 
@@ -18,7 +23,9 @@ export class ApiService {
   public isUserLoggedIn = new BehaviorSubject<boolean>(false);
   accessToken = 'access_token';
   userRole = 'role';
-  constructor(private http: HttpClient, private route: Router) {}
+  constructor(private http: HttpClient, private route: Router) {
+    this.checkUserIsActive();
+  }
 
   public httpOptions = {
     headers: new HttpHeaders({
@@ -64,6 +71,7 @@ export class ApiService {
 
   logout(): void {
     localStorage.removeItem(this.accessToken);
+    localStorage.removeItem(this.userRole);
     this.isUserLoggedIn.next(false);
     this.route.navigate(['login']);
   }
@@ -79,5 +87,13 @@ export class ApiService {
   setLocalStorage(token: string, role: string): void {
     localStorage.setItem(this.accessToken, token);
     localStorage.setItem(this.userRole, role);
+  }
+
+  checkUserIsActive() { 
+    if (this.getAccessToken()) {
+      this.isUserLoggedIn.next(true);
+    } else { 
+      this.isUserLoggedIn.next(false);
+    }
   }
 }

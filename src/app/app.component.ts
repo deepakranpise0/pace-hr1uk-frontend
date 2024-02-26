@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
       map((result) => result.matches),
       shareReplay()
     );
+  isLoggedIn: any;
 
   constructor(private router: Router, public _spinner: SpinnerService,public authService:ApiService) {}
   ngOnInit() {
@@ -56,6 +57,10 @@ export class AppComponent implements OnInit {
           event.url.includes(item.url)
         );
       });
+    
+    this.authService.isLoggedIn.subscribe(value => { 
+       this.isLoggedIn=value
+    });
   }
 
   logout() { 
