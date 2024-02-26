@@ -65,7 +65,7 @@ main {
     display: grid;
 
     .mat-mdc-card {
-        top: 15%;
+        margin-top: 25px;
         border-top: 4px solid #5265d1;
         background-color: rgb(246 246 248);
 
