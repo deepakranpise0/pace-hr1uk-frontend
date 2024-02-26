@@ -1,48 +1,48 @@
-<mat-sidenav-container class="sidenav-container"  *ngIf="isLoggedIn">
-    <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            <div class="toolbar-logo">
-                <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-                    <mat-icon class="hamburger" aria-label="Side nav toggle icon">menu</mat-icon>
-                </button>
-            </div>
-
-            <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
-                <a class="profile-icon"> <img src="https://app.teamedserv.com/assets/admin/images/users/avatar-1.jpg"
-                        alt="user-img" class="img-circle user-img"></a>
-                <mat-menu #menu="matMenu" class="custom-menu">
-                    <span class="profile-text">Hello Deepak!</span>
-                    <button mat-menu-item>
-                        <mat-icon>lock</mat-icon>
-                        <span>Reset Password</span>
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon>image</mat-icon>
-                        <span>Upload Profile Picture</span>
-                    </button>
-                    <!-- dynamic option  -->
-                    <button mat-menu-item>
-                        <mat-icon>person</mat-icon>
-                        <span>Company</span>
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon>account_circle</mat-icon>
-                        <span>Accounts</span>
-                    </button>
-                    <button mat-menu-item (click)="logout()">
-                        <mat-icon>exit_to_app</mat-icon>
-                        <span>Logout</span>
-                    </button>
-                </mat-menu>
-            </div>
-        </mat-toolbar>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <mat-toolbar color="primary">
+<mat-toolbar color="primary">
+    <div class="toolbar-logo">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
+            <mat-icon class="hamburger" aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+         <mat-toolbar color="primary">
             <img src="../assets/images/pace.jpg" alt="‘PACE-THE FUTURE OF PERSONAL DEVELOPMENT"
                 style="height: 40px; margin-right: 10px;">
+        </mat-toolbar>
+    </div>
+    <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
+        <a class="profile-icon"></a>
+        <mat-menu #menu="matMenu" class="custom-menu">
+            <span class="profile-text">Hello Raf!</span>
+            <button mat-menu-item>
+                <mat-icon>lock</mat-icon>
+                <span>Reset Password</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>image</mat-icon>
+                <span>Upload Profile Picture</span>
+            </button>
+            <!-- dynamic option  -->
+            <button mat-menu-item>
+                <mat-icon>person</mat-icon>
+                <span>Company</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>account_circle</mat-icon>
+                <span>Accounts</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+    </div>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container"  *ngIf="isLoggedIn">
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+   <mat-sidenav #sidenav class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+        <mat-toolbar color="primary">
         </mat-toolbar>
         <mat-nav-list>
             <a mat-list-item *ngFor="let item of navItems; let i= index;"
@@ -53,7 +53,7 @@
                 </span>
             </a>
         </mat-nav-list>
-            </mat-sidenav>  
+    </mat-sidenav>  
 </mat-sidenav-container>
 
 <div class="spinner-overlay" *ngIf="_spinner.spinner">

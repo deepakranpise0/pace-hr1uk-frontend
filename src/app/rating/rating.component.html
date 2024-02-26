@@ -5,9 +5,7 @@
                 {{questionsSet[currentSetIndex]?.domain}}
             </h3>
         </mat-card-header>
-        <!-- <div class="divider-container">
-            <mat-divider></mat-divider>
-        </div> -->
+      
         <mat-card-content class="content">
             <mat-list #questions>
                 @for (questions of questionsSet[currentSetIndex]?.questions; track questions) {

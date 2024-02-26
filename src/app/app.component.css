@@ -19,11 +19,7 @@
 } */
 
 .mat-toolbar.mat-primary {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    /* background-color: rgb(243 243 246); */
-    background-color: #77bce9;
+    background-color: #d2e4f2;
 
 }
 
@@ -36,7 +32,7 @@
 }
 
 ::ng-deep .mat-drawer-inner-container {
-    background-color: rgb(243 243 246);
+    background-color: #e9ecf2
 }
 
 ::ng-deep .mat-mdc-list-item-unscoped-content {

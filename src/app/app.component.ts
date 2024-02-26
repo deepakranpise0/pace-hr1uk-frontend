@@ -6,7 +6,9 @@ import {
   Component,
   inject,
   OnInit,
+  ViewChild,
 } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import {
   NavigationEnd,
   Router,
@@ -30,10 +32,10 @@ import { SpinnerService } from './services/spinner/spinner.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   title = 'pace-hr1-uk-frontend';
   public activeIndex: number = 0;
   private breakpointObserver = inject(BreakpointObserver);
-
   public navItems: NavLinksModel[] = NavItemsContant.filter((a)=>a.roles===this.authService.getUserRole());
 
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
   isLoggedIn: any;
+  isOpened:boolean=true;
 
   constructor(private router: Router, public _spinner: SpinnerService,public authService:ApiService) {}
   ngOnInit() {
@@ -65,5 +68,9 @@ export class AppComponent implements OnInit {
 
   logout() { 
     this.authService.logout();
+  }
+
+  toggle() { 
+    this.sidenav.toggle();
   }
 }
