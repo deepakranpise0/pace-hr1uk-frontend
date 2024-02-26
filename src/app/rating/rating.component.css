@@ -59,49 +59,65 @@ main {
         button {
             width: 100px;
         }
-    }  
+    }
 }
+
 .highlight-on-hover:hover {
-    background-color: #efefef; /* Change to desired highlight color */
+    background-color: #efefef;
+    /* Change to desired highlight color */
 }
 
 .header {
-  background-color: #d5e2f247; /* Light background color for header */
-  display: flex;
-  justify-content: flex-start;
+    background-color: #d5e2f247;
+    /* Light background color for header */
+    display: flex;
+    justify-content: flex-start;
 }
 
 .content {
-  background-color: #f3f3f6; /* Light background color for content */
+    background-color: #f3f3f6;
+    /* Light background color for content */
 }
 
 .flex-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-  border-radius: 5px;
-}
-
-.left-content{
-   width: 68%; /* Adjust as needed */
-  padding: 10px;  
-  white-space: break-spaces;
-}
-.right-content {
-  width: 28%; /* Adjust as needed */
-  padding: 10px; /* Optional: Add padding for better spacing */
-  white-space: break-spaces;
-  height: 100%;
-}
-
-@media only screen and (max-width: 600px) {
-  .left-content,
-  .right-content {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-  }
+    align-items: center;
+    border-radius: 5px;
 }
 
-::ng-deep .mat-mdc-list-item:not(.mat-mdc-list-item-interactive), .mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
+.left-content {
+    width: 68%;
+    /* Adjust as needed */
+    padding: 10px;
+    white-space: break-spaces;
+}
+
+.right-content {
+    width: 28%;
+    /* Adjust as needed */
+    padding: 10px;
+    /* Optional: Add padding for better spacing */
+    white-space: break-spaces;
+    height: 100%;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .left-content,
+    .right-content {
+        width: 100%;
+    }
+
+    .flex-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+::ng-deep .mat-mdc-list-item:not(.mat-mdc-list-item-interactive),
+.mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
     height: 100%;
 }
