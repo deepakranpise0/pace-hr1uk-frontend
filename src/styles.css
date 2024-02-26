@@ -25,6 +25,11 @@ body {
     justify-content: center;
 }
 
+.align-end {
+    display: flex;
+    justify-content: end;
+}
+
 .flex-row {
     flex-direction: row;
 }
@@ -108,23 +113,88 @@ main {
 /* Scrollbar css */
 /* Define scrollbar styles */
 ::-webkit-scrollbar {
-  width: 8px; /* width of the scrollbar */
+    width: 8px;
+    /* width of the scrollbar */
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* color of the scrollbar track */
+    background: #f1f1f1;
+    /* color of the scrollbar track */
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; /* color of the scrollbar handle */
-  border-radius: 6px; /* roundness of the scrollbar handle */
+    background: #888;
+    /* color of the scrollbar handle */
+    border-radius: 6px;
+    /* roundness of the scrollbar handle */
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; /* color of the scrollbar handle on hover */
+    background: #555;
+    /* color of the scrollbar handle on hover */
 }
 
+.table-container {
+    padding: 16px;
+    height: 70vh;
+    /* 70% of the viewport height */
+    overflow: auto;
+}
 
+table {
+
+    .mat-mdc-header-cell {
+        background-color: #3662a0 !important;
+    }
+
+    .mdc-data-table__header-cell {
+        color: #fff;
+    }
+
+    tr {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e9ecf2;
+        /* Set your desired color for even cells */
+    }
+
+    tr:nth-child(odd) {
+        background-color: #f9f9f9;
+        /* Set your desired color for odd rows */
+    }
+
+    .mat-mdc-paginator-container {
+        background: #efefef !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+    }
+}
+
+.mat-expansion-panel-body {
+    background: #f9f9f9;
+}
+
+.icon-container {
+    display: flex;
+    gap: 4px;
+
+    button {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .edit {
+        color: #2b5186;
+    }
+
+    .delete {
+        color: #ee1f10;
+    }
+}

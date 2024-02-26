@@ -42,22 +42,13 @@ export class AddEditPopupComponent {
     private _apiService: ApiService
   ) {
     this.masterForm = this.fb.group({
-      // name: ['', Validators.required],
+      name: ['', Validators.required],
       description: '',
     });
 
     if (this.data && this.data?.masterType === MasterDataType.QUESTION) {
       this.masterForm.addControl(
         'sectionId',
-        this.fb.control('', Validators.required)
-      );
-      this.masterForm.addControl(
-        'questions',
-        this.fb.control('', Validators.required)
-      );
-    } else {
-      this.masterForm.addControl(
-        'name',
         this.fb.control('', Validators.required)
       );
     }
