@@ -22,18 +22,18 @@ export class HomeComponent {
     map(({ matches }) => {
       if (matches) {
         return [
-          { title: 'Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
+          { title: "Interview's Done", cols: 1, rows: 1 },
+          { title: "Interview Pending", cols: 1, rows: 1 },
+          { title: 'User Interview Scheduled Weekly', cols: 1, rows: 1 },
+          { title: 'User Interview Scheduled Monthly', cols: 1, rows: 1 }
         ];
       }
 
       return [
-        { title: 'Card 1', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 2 },
-        { title: 'Card 4', cols: 1, rows: 1 }
+       { title: "Interview's Done", cols: 1, rows: 1 },
+          { title: "Interview Pending", cols: 1, rows: 1 },
+          { title: 'User Interview Scheduled Weekly', cols: 1, rows: 1 },
+          { title: 'User Interview Scheduled Monthly', cols: 1, rows: 1 }
       ];
     })
   );

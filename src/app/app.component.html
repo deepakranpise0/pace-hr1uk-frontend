@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="isLoggedIn">
     <div class="toolbar-logo">
         <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
             <mat-icon class="hamburger" aria-label="Side nav toggle icon">menu</mat-icon>
@@ -9,26 +9,29 @@
         </mat-toolbar>
     </div>
     <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
-        <a class="profile-icon"></a>
+        <a class="profile-icon">
+            <img src="../assets/images/profile.png"
+                alt="user-img" class="img-circle user-img">
+        </a>
         <mat-menu #menu="matMenu" class="custom-menu">
             <span class="profile-text">Hello Raf!</span>
             <button mat-menu-item>
                 <mat-icon>lock</mat-icon>
                 <span>Reset Password</span>
             </button>
-            <button mat-menu-item>
+            <!-- <button mat-menu-item>
                 <mat-icon>image</mat-icon>
                 <span>Upload Profile Picture</span>
-            </button>
+            </button> -->
             <!-- dynamic option  -->
-            <button mat-menu-item>
+            <!-- <button mat-menu-item>
                 <mat-icon>person</mat-icon>
                 <span>Company</span>
             </button>
             <button mat-menu-item>
                 <mat-icon>account_circle</mat-icon>
                 <span>Accounts</span>
-            </button>
+            </button> -->
             <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
