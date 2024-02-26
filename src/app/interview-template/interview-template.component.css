@@ -67,6 +67,8 @@ main {
         /* Adjust as needed */
         padding: 10px;
         white-space: break-spaces;
+        font-size: 15px;
+        font-weight: 500;
     }
 
     .right-content {
@@ -89,6 +91,13 @@ main {
     }
 
     .odd {
+        background-color: #f9f9f9;
+    }
+
+    .mat-expansion-panel-header{
+        background-color: #f9f9f9;
+    }
+    .mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover {
         background-color: #f9f9f9;
     }
 }

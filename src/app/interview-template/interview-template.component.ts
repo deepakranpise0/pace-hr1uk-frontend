@@ -9,7 +9,7 @@ import { MasterDataType } from '../common/enum/AppEnum';
 import { MasterDataList } from '../common/models/MasterDataList';
 import { QuestionMarkModel } from '../common/models/QuestionMarkModel';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
@@ -120,18 +120,23 @@ export class InterviewTemplateComponent implements OnInit {
     question.isSelected = event.checked;
     if (event.checked) {
       this.selectedQuestions.push(question);
-      setTimeout(() => {});
-      setTimeout(() => {
-        const index = this.questions.data.findIndex((q) => q === question);
-        if (index !== -1) {
-          this.questions.data.splice(index, 1);
-          this.questions._updateChangeSubscription(); // Update table data
-        }
-      }, 200);
     }
   }
-  public removeQuestion(index: number) {
+  public removeQuestion(index: number, question: QuestionMarkModel) {
     if (index >= 0) this.selectedQuestions.splice(index, 1);
+    let ques = this.questions.data.find((q) => q._id === question._id);
+    if (ques && ques.isSelected) ques.isSelected = false;
+    this.questions._updateChangeSubscription();
+  }
+  onPageChange(event: PageEvent) {
+    // Check if there are more items on the next page
+    if (event.previousPageIndex && event.pageIndex < event.previousPageIndex) {
+      const nextPageFirstIndex = event.pageIndex * event.pageSize;
+      if (this.selectedQuestions.length > nextPageFirstIndex) {
+        const nextItem = this.selectedQuestions[nextPageFirstIndex];
+        this.paginator._changePageSize(this.paginator.pageSize);
+      }
+    }
   }
   openDialog() {}
 }
