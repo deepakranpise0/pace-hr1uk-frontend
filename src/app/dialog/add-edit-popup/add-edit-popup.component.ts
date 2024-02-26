@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -15,6 +15,7 @@ export interface DialogData {
   type: MasterDataType;
   action: MasterDataFormType;
   editData: MasterDataList;
+  masterType: MasterDataType;
 }
 
 @Component({
@@ -27,10 +28,12 @@ export class AddEditPopupComponent {
   public masterDataFormType = MasterDataFormType;
   public isEdit: boolean = false;
   public editId!: string;
-  masterForm = this.fb.group({
-    name: ['', Validators.required],
-    description: ''
-  });
+  public masterForm: FormGroup;
+  foods = [
+    { value: '65d68e848de0efa24950573b', viewValue: 'Steak' },
+    { value: '65d68e848de0efa24950573b', viewValue: 'Pizza' },
+    { value: '65d68e848de0efa24950573b', viewValue: 'Tacos' },
+  ];
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEditPopupComponent>,
@@ -38,7 +41,26 @@ export class AddEditPopupComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private _apiService: ApiService
   ) {
-    console.log(data);
+    this.masterForm = this.fb.group({
+      // name: ['', Validators.required],
+      description: '',
+    });
+
+    if (this.data && this.data?.masterType === MasterDataType.QUESTION) {
+      this.masterForm.addControl(
+        'sectionId',
+        this.fb.control('', Validators.required)
+      );
+      this.masterForm.addControl(
+        'questions',
+        this.fb.control('', Validators.required)
+      );
+    } else {
+      this.masterForm.addControl(
+        'name',
+        this.fb.control('', Validators.required)
+      );
+    }
     if (this.data && this.data?.action === MasterDataFormType.UPDATE) {
       this.isEdit = true;
       this.masterForm.patchValue({
@@ -58,7 +80,7 @@ export class AddEditPopupComponent {
       const formModel: MasterDataModel = this.masterForm
         .value as unknown as MasterDataModel;
       // formModel.masterDataType = this.data.type;
-      this.dialogRef.close({formModel,id:this.editId});
+      this.dialogRef.close({ formModel, id: this.editId });
     }
   }
 }

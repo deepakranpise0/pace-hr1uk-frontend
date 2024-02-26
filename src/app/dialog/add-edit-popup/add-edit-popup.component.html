@@ -4,10 +4,20 @@
         <div>
             <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input matInput formControlName="name">
+                <input matInput [formControlName]="data.masterType === masterDataType.QUESTION ? 'questions' : 'name'">
                 <mat-error *ngIf="masterForm.get('name')?.invalid && masterForm.get('name')?.touched">
                     Name is required
                 </mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="data.masterType === masterDataType.QUESTION">
+            <mat-form-field>
+                <mat-label>Section</mat-label>
+                <mat-select formControlName="sectionId">
+                    @for (food of foods; track food) {
+                    <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
         </div>
         <div>

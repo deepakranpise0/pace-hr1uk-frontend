@@ -12,6 +12,9 @@ import {
 import {
   AddEditPopupComponent,
 } from './add-edit-popup/add-edit-popup.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [
   { path: '', component: AddEditPopupComponent }
@@ -24,6 +27,9 @@ const routes: Routes = [
     MatDialogModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
     RouterModule.forChild(routes)
   ]
 })

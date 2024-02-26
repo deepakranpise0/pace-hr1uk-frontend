@@ -3,5 +3,5 @@ export enum APIEnum {
   CREATE_MASTER = 'masters',
   LOGIN='auth/login',
   GET_Questions = 'questions?search=',
-
+  CREATE_QUESTION = 'questions',
 }

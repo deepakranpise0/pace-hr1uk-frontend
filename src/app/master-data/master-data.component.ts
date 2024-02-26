@@ -62,10 +62,9 @@ export class MasterDataComponent implements OnInit {
     });
   }
   ngAfterViewInit() {
-    if (this.masterType === MasterDataType.QUESTION) 
+    if (this.masterType === MasterDataType.QUESTION)
       this.questionsData.paginator = this.paginator;
-    else
-      this.masterData.paginator = this.paginator;
+    else this.masterData.paginator = this.paginator;
   }
 
   public getTitle(): string {
@@ -101,6 +100,7 @@ export class MasterDataComponent implements OnInit {
       action: MasterDataFormType.ADD,
       type: this.masterType,
       editData: null,
+      masterType: this.masterType,
     };
     if (data) {
       dialogData.action = MasterDataFormType.UPDATE;
@@ -117,17 +117,21 @@ export class MasterDataComponent implements OnInit {
       let id = '';
       if (this.action === MasterDataFormType.UPDATE) {
         id = formModel.id;
-        formModel = formModel.formModel;
       }
+      formModel = formModel.formModel;
       this.handleDialogSubmit(formModel, id);
     });
   }
 
   public handleDialogSubmit(formModel: MasterDataModel, id: string = '') {
-    formModel.masterDataType = this.masterType;
-    const apiMethod = this.action === MasterDataFormType.ADD ? 'post' : 'post';
+    if (this.masterType !== MasterDataType.QUESTION)
+      formModel.masterDataType = this.masterType;
     this._spinner.showSpinner();
-    this._apiService.post(APIEnum.CREATE_MASTER, formModel, id).subscribe(
+    let endPoint =
+      this.masterType === this.MasterDataTypes.QUESTION
+        ? APIEnum.CREATE_QUESTION
+        : APIEnum.CREATE_MASTER;
+    this._apiService.post(endPoint, formModel, id).subscribe(
       (res: any) => {
         if (res) {
           this.fetchMasterList();
@@ -147,7 +151,11 @@ export class MasterDataComponent implements OnInit {
 
   public deleteData(id: string) {
     this._spinner.showSpinner();
-    this._apiService.delete(APIEnum.CREATE_MASTER + `/${id}`).subscribe(
+    let endPoint =
+      this.masterType === this.MasterDataTypes.QUESTION
+        ? APIEnum.CREATE_QUESTION
+        : APIEnum.CREATE_MASTER;
+    this._apiService.delete(endPoint + `/${id}`).subscribe(
       (res: any) => {
         if (res) {
           this.fetchMasterList();
