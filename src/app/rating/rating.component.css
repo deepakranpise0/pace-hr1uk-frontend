@@ -86,10 +86,13 @@ main {
 .left-content{
    width: 68%; /* Adjust as needed */
   padding: 10px;  
+  white-space: break-spaces;
 }
 .right-content {
   width: 28%; /* Adjust as needed */
   padding: 10px; /* Optional: Add padding for better spacing */
+  white-space: break-spaces;
+  height: 100%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -97,4 +100,8 @@ main {
   .right-content {
     width: 100%;
   }
+}
+
+::ng-deep .mat-mdc-list-item:not(.mat-mdc-list-item-interactive), .mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
+    height: 100%;
 }
