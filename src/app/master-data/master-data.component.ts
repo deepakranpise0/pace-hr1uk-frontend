@@ -50,9 +50,9 @@ export class MasterDataComponent implements OnInit {
         this.masterType = typeParam as MasterDataType;
         if (this.masterType === MasterDataType.QUESTION) {
           this.isQuestionsSelected = true;
-          console.log(this.displayedColumns.slice(2));
-          this.displayedColumns.splice(2, 0, 'section');
-          console.log(this.displayedColumns);
+          // console.log(this.displayedColumns.slice(2));
+          // this.displayedColumns.splice(2, 0, 'section');
+          // console.log(this.displayedColumns);
         }
         this.fetchMasterList();
       } else {

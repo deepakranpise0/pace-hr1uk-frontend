@@ -28,7 +28,7 @@ import { AddEditDialogModule } from './dialog/dialog.module';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { RatingModule } from './rating/rating.module';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -50,6 +50,7 @@ import { RatingModule } from './rating/rating.module';
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule
   ],
   providers: [

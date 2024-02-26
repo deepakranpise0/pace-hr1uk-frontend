@@ -1,0 +1,103 @@
+main {
+
+    /* padding: 16px; */
+    .add-btn {
+        display: flex;
+        justify-content: end;
+        padding: 16px 16px 0 0;
+    }
+
+    .mat-step,
+    .mat-horizontal-stepper-wrapper {
+        background: #f6f6f8;
+    }
+
+    .mat-stepper-horizontal {
+        margin-top: 8px;
+    }
+
+    .mat-mdc-form-field {
+        margin-top: 16px;
+    }
+
+    /* CSS for the form layout */
+    .mat-form-field-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        /* Adjust spacing between rows */
+    }
+
+    .mat-form-field-col {
+        flex-basis: calc(50% - 8px);
+        /* Adjust column width for larger screens */
+        margin-right: 16px;
+        /* Adjust spacing between columns */
+    }
+
+    /* CSS for responsive design */
+    @media screen and (max-width: 600px) {
+
+        .mat-form-field-row {
+            flex-direction: column;
+        }
+
+        /* For small screens, make each field take up full width */
+        .mat-form-field-col {
+            flex-basis: 100%;
+            margin-right: 0;
+        }
+    }
+
+    .questions-table {
+        margin-top: 20px;
+    }
+
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        border-radius: 5px;
+        align-items: center;
+    }
+
+    .left-content {
+        /* Adjust as needed */
+        padding: 10px;
+        white-space: break-spaces;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .right-content {
+        /* width: 28%; */
+        /* Adjust as needed */
+        padding: 10px;
+        /* Optional: Add padding for better spacing */
+        white-space: break-spaces;
+        height: 100%;
+    }
+
+    .highlight-on-hover:hover {
+        background-color: #efefef;
+        /* Change to desired highlight color */
+    }
+
+    .even {
+        background-color: #e9ecf2;
+        /* Set your desired color for even cells */
+    }
+
+    .odd {
+        background-color: #f9f9f9;
+    }
+
+    .mat-expansion-panel-header{
+        background-color: #f9f9f9;
+    }
+    .mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover {
+        background-color: #f9f9f9;
+    }
+}

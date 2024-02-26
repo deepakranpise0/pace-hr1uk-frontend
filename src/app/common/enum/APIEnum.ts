@@ -4,4 +4,7 @@ export enum APIEnum {
   LOGIN='auth/login',
   GET_Questions = 'questions?search=',
   CREATE_QUESTION = 'questions',
+
+  GET_USERS = 'users',
+  GET_INTERVIEW_TEMPLATES = 'userInterviewTemplates'
 }

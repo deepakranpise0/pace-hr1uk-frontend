@@ -38,4 +38,11 @@ export const NavItemsContant: NavLinksModel[] = [
     icon: 'question_answer',
     url: '/master/' + MasterDataType.QUESTION,
   },
+  {
+    label: 'Interview Template',
+    roles: UserTypeConstant.ADMIN,
+    subItems: [],
+    icon: 'list_alt',
+    url: '/interview-template',
+  },
 ];
