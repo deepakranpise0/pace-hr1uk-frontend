@@ -40,9 +40,6 @@
     </div>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container"  *ngIf="isLoggedIn">
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
    <mat-sidenav #sidenav class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
         <mat-toolbar color="primary">
@@ -56,12 +53,15 @@
                 </span>
             </a>
         </mat-nav-list>
-    </mat-sidenav>  
+    </mat-sidenav>
+    <mat-sidenav-content>          
+        <div class="spinner-overlay" *ngIf="_spinner.spinner">
+            <mat-spinner color="primary" diameter="30"></mat-spinner>
+        </div>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>  
 </mat-sidenav-container>
 
-<div class="spinner-overlay" *ngIf="_spinner.spinner">
-    <mat-spinner color="primary" diameter="50"></mat-spinner>
-</div>
 
 <div *ngIf="!isLoggedIn">
   <router-outlet></router-outlet> <!-- Display login component here -->

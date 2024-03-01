@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {
+  RouterModule,
+  Routes,
+} from '@angular/router';
 
 import { AuthGuard } from './auth.guard';
 
@@ -34,6 +37,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
   },
+  {
+    path: 'interview-feedback',
+    loadChildren:()=>import('./interview-feedback/interview-feedback.module').then((m)=>m.InterviewTemplateModule)
+  }
 ];
 
 @NgModule({

@@ -45,4 +45,12 @@ export const NavItemsContant: NavLinksModel[] = [
     icon: 'list_alt',
     url: '/interview-template',
   },
+  {
+    label: 'Interview Feedback',
+    roles: UserTypeConstant.ADMIN,
+    subItems: [],
+    icon: 'list_alt',
+    url: '/interview-feedback',
+  },
 ];
+

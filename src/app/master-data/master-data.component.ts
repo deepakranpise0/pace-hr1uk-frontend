@@ -1,18 +1,30 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
 
 import { AppConstant } from '../common/constant/AppConstant';
 import { APIEnum } from '../common/enum/APIEnum';
-import { MasterDataFormType, MasterDataType } from '../common/enum/AppEnum';
+import {
+  MasterDataFormType,
+  MasterDataType,
+} from '../common/enum/AppEnum';
 import { MasterDataList } from '../common/models/MasterDataList';
 import { MasterDataModel } from '../common/models/MasterDataModel';
-import { AddEditPopupComponent } from '../dialog/add-edit-popup/add-edit-popup.component';
+import { QuestionDataList } from '../common/models/QuestionDataList';
+import {
+  AddEditPopupComponent,
+} from '../dialog/add-edit-popup/add-edit-popup.component';
 import { ApiService } from '../services/api/api.service';
 import { SpinnerService } from '../services/spinner/spinner.service';
-import { QuestionDataList } from '../common/models/QuestionDataList';
 
 @Component({
   selector: 'pace-hr1-uk-frontend-master-data',
@@ -51,7 +63,7 @@ export class MasterDataComponent implements OnInit {
         if (this.masterType === MasterDataType.QUESTION) {
           this.isQuestionsSelected = true;
           // console.log(this.displayedColumns.slice(2));
-          // this.displayedColumns.splice(2, 0, 'section');
+          this.displayedColumns.splice(2, 0, 'section');
           // console.log(this.displayedColumns);
         }
         this.fetchMasterList();
