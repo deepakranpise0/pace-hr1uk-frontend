@@ -46,6 +46,7 @@ export class InterviewTemplateComponent implements OnInit {
   public questions = new MatTableDataSource<QuestionMarkModel>([]);
   public selectedQuestions: QuestionMarkModel[] = [];
   public displayedSelectedQuestions: QuestionMarkModel[] = [];
+  public masterDataType = MasterDataType;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
@@ -181,5 +182,21 @@ export class InterviewTemplateComponent implements OnInit {
 
   submit() {
     console.log(this.configFormGroup);
+  }
+  public getConfigName(masterDataType : MasterDataType, id: string): string {
+    let masterData=[];
+    switch(masterDataType) {
+      case MasterDataType.DOMAIN : {
+        masterData = this.domains;
+        break;
+      }
+      case MasterDataType.ASSESSMENT_TYPE : {
+        masterData = this.assessmentTypes;
+        break;
+      }
+      default : return '';
+    }
+
+    return masterData.find(data => data._id === id)?.name || '';
   }
 }

@@ -100,6 +100,9 @@ main {
 
 .accordion-container {
   margin-bottom: 10px; /* Adjust the margin as needed */
+  border-radius: 6px;
+  border: 1px solid #cec8c8;
+  border-top: 4px solid #5265d1;
 }
 
 .accordion {
@@ -117,5 +120,22 @@ main {
 
     mat-icon {
         color: #009400;
+    }
+}
+
+.template-info {
+    background: #fff;
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid #cec8c8;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    border-top: 4px solid #5265d1;
+    p {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20px;
+        margin-bottom: 0;
     }
 }

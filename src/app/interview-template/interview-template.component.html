@@ -1,11 +1,7 @@
 <main style="padding-top: 5px">
   <h1 class="mat-h1">User Interview Template</h1>
   <mat-divider></mat-divider>
-  <mat-stepper
-    [orientation]="smallScreen ? 'vertical' : 'horizontal'"
-    [linear]="true"
-    #stepper
-  >
+  <mat-stepper [orientation]="smallScreen ? 'vertical' : 'horizontal'" [linear]="true" #stepper>
     <mat-step [stepControl]="configFormGroup">
       <div class="template-container">
         <form [formGroup]="configFormGroup">
@@ -13,12 +9,10 @@
           <mat-form-field>
             <mat-label>Template Name</mat-label>
             <input matInput formControlName="templateName" />
-            <mat-error
-              *ngIf="
+            <mat-error *ngIf="
                 configFormGroup.get('templateName')?.invalid &&
                 configFormGroup.get('name')?.touched
-              "
-            >
+              ">
               Name is required
             </mat-error>
           </mat-form-field>
@@ -27,11 +21,7 @@
               <mat-form-field>
                 <mat-label>Domain</mat-label>
                 <mat-select formControlName="domainId">
-                  <mat-option
-                    *ngFor="let domain of domains"
-                    [value]="domain._id"
-                    >{{ domain.name }}</mat-option
-                  >
+                  <mat-option *ngFor="let domain of domains" [value]="domain._id">{{ domain.name }}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -39,11 +29,8 @@
               <mat-form-field>
                 <mat-label>Assessment Type</mat-label>
                 <mat-select formControlName="assessmentId">
-                  <mat-option
-                    *ngFor="let assessmentType of assessmentTypes"
-                    [value]="assessmentType._id"
-                    >{{ assessmentType.name }}</mat-option
-                  >
+                  <mat-option *ngFor="let assessmentType of assessmentTypes" [value]="assessmentType._id">{{
+                    assessmentType.name }}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -58,7 +45,7 @@
     </mat-step>
     <mat-step [stepControl]="questionsFormGroup" label="Add Questions">
       <div class="template-container">
-        <div *ngIf="questionsFormGroup.get('questionSet')?.value?.length || [].length > 0">
+        <div *ngIf="questionsFormGroup.get('questionSet')?.value?.length">
           <div class="accordion-container" *ngFor="let item of questionsFormGroup.get('questionSet')?.value || []">
             <mat-accordion class="accordion">
               <mat-expansion-panel class="accordion-panel">
@@ -67,13 +54,9 @@
                     {{ item.sectionName }} ({{ item.questionsArray.length }})
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <mat-list
-                  *ngFor="let question of item.questionsArray; let i = index"
-                >
-                  <div
-                    [ngClass]="i % 2 === 0 ? 'even' : 'even'"
-                    class="flex-container highlight-on-hover center-content"
-                  >
+                <mat-list *ngFor="let question of item.questionsArray; let i = index">
+                  <div [ngClass]="i % 2 === 0 ? 'even' : 'even'"
+                    class="flex-container highlight-on-hover center-content">
                     <div class="left-content">
                       {{ i + 1 }}. {{ question.name }}
                     </div>
@@ -118,12 +101,9 @@
                 Action
               </th>
               <td mat-cell *matCellDef="let element">
-                <div class="icon-container">
-                  <mat-checkbox
-                    color="primary"
-                    [checked]="element.isSelected"
-                    (change)="selectQuestion($event, element)"
-                  >
+                <div class="icon-container">  
+                  <mat-checkbox color="primary" [checked]="element.isSelected"
+                    (change)="selectQuestion($event, element)">
                   </mat-checkbox>
                 </div>
               </td>
@@ -136,22 +116,13 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
 
-          <mat-paginator
-            [pageSizeOptions]="[10, 20]"
-            showFirstLastButtons
-            aria-label="Select page of periodic elements"
-            (page)="onPageChange($event)"
-          >
+          <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"
+            (page)="onPageChange($event)">
           </mat-paginator>
         </form>
       </div>
       <div class="align-end example-button-row">
-        <button
-          mat-stroked-button
-          matStepperPrevious
-          color="accent"
-          type="button"
-        >
+        <button mat-stroked-button matStepperPrevious color="accent" type="button">
           Back
         </button>
         <button mat-raised-button matStepperNext color="primary" type="button">
@@ -163,49 +134,44 @@
       <div>
         <h1 class="title-flex">Verify details <mat-icon>check_circle_outline</mat-icon></h1>
       </div>
-      <div>
+      <div class="template-info">
         <p>Template Name : {{ configFormGroup.controls.templateName.value }}</p>
-        <p>Domain : {{ configFormGroup.controls.domainId.value }}</p>
+        <p>Domain : {{ getConfigName(masterDataType.DOMAIN, configFormGroup.controls.domainId.value || '') }}</p>
         <p>
-          assessment Type: {{ configFormGroup.controls.assessmentId.value }}
+          Assessment Type: {{ getConfigName(masterDataType.ASSESSMENT_TYPE, configFormGroup.controls.assessmentId.value || '') }}
         </p>
       </div>
-        <div *ngIf="questionsFormGroup.get('questionSet')?.value?.length">
-          <div class="accordion-container" *ngFor="let item of questionsFormGroup.get('questionSet')?.value">
-            <mat-accordion class="accordion">
-              <mat-expansion-panel class="accordion-panel" [expanded]="true">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    {{ item.sectionName }} ({{ item.questionsArray.length }})
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <mat-list
-                  *ngFor="let question of item.questionsArray; let i = index"
-                >
-                  <div
-                    [ngClass]="i % 2 === 0 ? 'even' : 'even'"
-                    class="flex-container highlight-on-hover center-content"
-                  >
-                    <div class="left-content">
-                      {{ i + 1 }}. {{ question.name }}
-                    </div>
+      <div *ngIf="questionsFormGroup.get('questionSet')?.value?.length">
+        <div class="accordion-container" *ngFor="let item of questionsFormGroup.get('questionSet')?.value">
+          <mat-accordion class="accordion">
+            <mat-expansion-panel class="accordion-panel" [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ item.sectionName }} ({{ item.questionsArray.length }})
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list *ngFor="let question of item.questionsArray; let i = index">
+                <div [ngClass]="i % 2 === 0 ? 'even' : 'even'" class="flex-container highlight-on-hover center-content">
+                  <div class="left-content">
+                    {{ i + 1 }}. {{ question.name }}
                   </div>
-                </mat-list>
-              </mat-expansion-panel>
-            </mat-accordion>
-          </div>
+                </div>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
-        <div class="align-end example-button-row">
-         <button mat-button color="accent" (click)="stepper.reset()">
-            Reset
-          </button>
-            <button mat-stroked-button matStepperPrevious color="accent">
-            Back
-          </button>
-          <button mat-raised-button color="primary" (click)="submit()">
-            Submit
-          </button>
-        </div>
+      </div>
+      <div class="align-end example-button-row">
+        <button mat-button color="accent" (click)="stepper.reset()">
+          Reset
+        </button>
+        <button mat-stroked-button matStepperPrevious color="accent">
+          Back
+        </button>
+        <button mat-raised-button color="primary" (click)="submit()">
+          Submit
+        </button>
+      </div>
     </mat-step>
   </mat-stepper>
 </main>
