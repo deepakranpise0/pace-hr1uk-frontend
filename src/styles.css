@@ -141,6 +141,19 @@ main {
     overflow: auto;
 }
 
+.interview-table-container {
+    padding: 14px;
+    height: 65vh;
+    overflow: auto;
+}
+
+.template-container {
+    padding: 12px;
+    height: 58vh;
+    overflow: auto;
+}
+
+
 table {
 
     .mat-mdc-header-cell {

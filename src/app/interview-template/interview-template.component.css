@@ -9,17 +9,9 @@ main {
 
     .mat-step,
     .mat-horizontal-stepper-wrapper {
-        background: #f6f6f8;
+        background: #D2E4F2;
     }
-
-    .mat-stepper-horizontal {
-        margin-top: 8px;
-    }
-
-    .mat-mdc-form-field {
-        margin-top: 16px;
-    }
-
+    
     /* CSS for the form layout */
     .mat-form-field-row {
         display: flex;
@@ -100,4 +92,21 @@ main {
     .mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover {
         background-color: #f9f9f9;
     }
+}
+
+.example-button-row button{
+  margin:10px;
+}
+
+.accordion-container {
+  margin-bottom: 10px; /* Adjust the margin as needed */
+}
+
+.accordion {
+  width: 100%; /* Optionally adjust the width of the accordion */
+}
+
+.accordion-panel {
+  border-radius: 8px; /* Optional: Add border radius to accordion panels */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow for a raised effect */
 }

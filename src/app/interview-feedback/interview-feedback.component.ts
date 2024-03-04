@@ -27,7 +27,6 @@ export class InterviewFeedbackComponent {
   tabGroup!: MatTabGroup;
 
   tabs: any[] = [];
-  currentTabIndex = 0;
    observations = [
     { label: 'Poor(1)', value: 1 },
     { label: 'Fair(2)', value: 2 },
@@ -38,6 +37,12 @@ export class InterviewFeedbackComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.initializeTabs();
+  }
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+        this.tabGroup.selectedIndex = 0;
+    
   }
 
   toggleStar(behavior: any, starIndex: number) {
@@ -72,18 +77,22 @@ export class InterviewFeedbackComponent {
   initializeTabs() {
     const tabData = [
       { label: 'Communication' },
-      { label: 'Presentation' },
-      { label: 'Group Discussion' }
+      { label: 'Presentation'},
+      { label: 'Group Discussion'}
     ];
 
     tabData.forEach(tab => {
       let form = this.formBuilder.group({
         behaviors: this.formBuilder.array([
           this.createBehaviorFormGroup(),
+           this.createBehaviorFormGroup(),
+          this.createBehaviorFormGroup(),
+          this.createBehaviorFormGroup(),
+          this.createBehaviorFormGroup()
         ]),
         notes:['Engages the audience and demonstrates passion and energy through e.g. varied tone, pace etc.Engages the audience and demonstrates passion and energy through e.g. varied tone, pace etc.',Validators.nullValidator]
       });
-      this.tabs.push({ label: tab.label, form });
+      this.tabs.push({ label: tab.label,visible:false, form });
     });
   }
 

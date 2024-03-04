@@ -46,7 +46,7 @@
         </mat-toolbar>
         <mat-nav-list>
             <a mat-list-item *ngFor="let item of navItems; let i= index;"
-                [ngClass]="i === activeIndex ? 'active' : 'inactive'" [href]="item.url">
+                [ngClass]="i === activeIndex ? 'active' : 'inactive'" [routerLink]="item.url">
                 <mat-icon>{{item.icon}}</mat-icon>
                 <span>
                     {{item.label}}

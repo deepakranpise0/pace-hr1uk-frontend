@@ -1,97 +1,102 @@
 <main>
+   <h1 class="mat-h1">User Interview </h1>
+    <mat-divider></mat-divider>
   <mat-tab-group
     #tabGroup
     [dynamicHeight]="true"
     style="background: #d5e2f2"
     (selectedTabChange)="tabChanged($event)"
+    [selectedIndex]="tabGroup.selectedIndex"
   >
-    <mat-tab *ngFor="let tab of tabs; let i = index" label="{{ tab.label }}">
-      <ng-template matTabContent>
-        <form [formGroup]="tab.form">
-          <div class="table-container">
-            <table
-              mat-table
-              [dataSource]="tab.form.controls.behaviors.controls"
-              class="custom-table table-container"
-            >
-              <ng-container matColumnDef="low">
-                <th mat-header-cell class="mat-column-middle" *matHeaderCellDef>
-                  Low
-                </th>
-                <td
-                  mat-cell
-                  class="mat-column-first"
-                  *matCellDef="let behavior"
-                >
+    <ng-container *ngFor="let tab of tabs; let i = index">
+      <mat-tab  label="{{ tab.label }}" [disabled]="tab.visible">
+        <ng-template matTabContent >
+          <form [formGroup]="tab.form">
+            <div class="interview-table-container">
+              <table
+                mat-table
+                [dataSource]="tab.form.controls.behaviors.controls"
+                class="custom-table"
+              >
+                <ng-container matColumnDef="low">
+                  <th mat-header-cell class="mat-column-middle" *matHeaderCellDef>
+                    Low
+                  </th>
+                  <td
+                    mat-cell
+                    class="mat-column-first"
+                    *matCellDef="let behavior"
+                  >
+                    <mat-form-field>
+                      <mat-label>Low:</mat-label>
+                      <textarea
+                        matInput
+                        name="low"
+                        [rows]="1"
+                        [formControl]="behavior.controls.low"
+                        placeholder="Enter low feedback"
+                      ></textarea>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="ratings">
+                  <th mat-header-cell class="mat-column-middle" *matHeaderCellDef>
+                    Rating
+                  </th>
+                  <td
+                    mat-cell
+                    class="mat-column-middle"
+                    *matCellDef="let behavior"
+                  >
+                    <mat-form-field>
+                      <mat-label>Ratings</mat-label>
+                      <mat-select
+                        [formControl]="behavior.controls.ratings"
+                        required
+                      >
+                        <mat-option
+                          *ngFor="let rating of observations"
+                          [value]="rating.value"
+                          >{{ rating.label }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="high">
+                  <th mat-header-cell class="mat-column-middle" *matHeaderCellDef>
+                    High
+                  </th>
+                  <td mat-cell class="mat-column-last" *matCellDef="let behavior">
+                    {{ behavior.controls.high.value }}
+                  </td>
+                </ng-container>
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="['low', 'ratings', 'high']"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: ['low', 'ratings', 'high']"
+                ></tr>
+              </table>
+              <table class="custom-table" style="width: 100%">
+                <td>
                   <mat-form-field>
-                    <mat-label>Low:</mat-label>
+                    <mat-label>Notes:</mat-label>
                     <textarea
                       matInput
-                      name="low"
-                      [rows]="1"
-                      [formControl]="behavior.controls.low"
-                      placeholder="Enter low feedback"
+                      [formControl]="tab.form.controls.notes"
+                      placeholder="Enter notes"
                     ></textarea>
                   </mat-form-field>
                 </td>
-              </ng-container>
-              <ng-container matColumnDef="ratings">
-                <th mat-header-cell class="mat-column-middle" *matHeaderCellDef>
-                  Rating
-                </th>
-                <td
-                  mat-cell
-                  class="mat-column-middle"
-                  *matCellDef="let behavior"
-                >
-                  <mat-form-field>
-                    <mat-label>Ratings</mat-label>
-                    <mat-select
-                      [formControl]="behavior.controls.ratings"
-                      required
-                    >
-                      <mat-option
-                        *ngFor="let rating of observations"
-                        [value]="rating.value"
-                        >{{ rating.label }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="high">
-                <th mat-header-cell class="mat-column-middle" *matHeaderCellDef>
-                  High
-                </th>
-                <td mat-cell class="mat-column-last" *matCellDef="let behavior">
-                  {{ behavior.controls.high.value }}
-                </td>
-              </ng-container>
-              <tr
-                mat-header-row
-                *matHeaderRowDef="['low', 'ratings', 'high']"
-              ></tr>
-              <tr
-                mat-row
-                *matRowDef="let row; columns: ['low', 'ratings', 'high']"
-              ></tr>
-            </table>
-            <table class="custom-table" style="width: 100%">
-              <td>
-                <mat-form-field>
-                  <mat-label>Notes:</mat-label>
-                  <textarea
-                    matInput
-                    [formControl]="tab.form.controls.notes"
-                    placeholder="Enter notes"
-                  ></textarea>
-                </mat-form-field>
-              </td>
-            </table>
-          </div>
-        </form>
-      </ng-template>
-    </mat-tab>
+              </table>
+            </div>
+          </form>
+        </ng-template>
+      </mat-tab>
+    </ng-container>
   </mat-tab-group>
    <div class="example-button-row">
         <button
@@ -121,5 +126,5 @@
         >
           Submit
         </button>
-      </div>
+    </div>
 </main>
