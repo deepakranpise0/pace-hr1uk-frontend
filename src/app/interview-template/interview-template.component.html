@@ -3,7 +3,7 @@
   <mat-divider></mat-divider>
   <mat-stepper
     [orientation]="smallScreen ? 'vertical' : 'horizontal'"
-    [linear]="false"
+    [linear]="true"
     #stepper
   >
     <mat-step [stepControl]="configFormGroup">
@@ -56,10 +56,10 @@
         </button>
       </div>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Add Questions">
+    <mat-step [stepControl]="questionsFormGroup" label="Add Questions">
       <div class="template-container">
-        <div *ngIf="accordionItems.length > 0">
-          <div class="accordion-container" *ngFor="let item of accordionItems">
+        <div *ngIf="questionsFormGroup.get('questionSet')?.value?.length || [].length > 0">
+          <div class="accordion-container" *ngFor="let item of questionsFormGroup.get('questionSet')?.value || []">
             <mat-accordion class="accordion">
               <mat-expansion-panel class="accordion-panel">
                 <mat-expansion-panel-header>
@@ -83,7 +83,7 @@
             </mat-accordion>
           </div>
         </div>
-        <form [formGroup]="secondFormGroup" class="questions-table">
+        <form [formGroup]="questionsFormGroup" class="questions-table">
           <table mat-table [dataSource]="questions">
             <ng-container matColumnDef="no">
               <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -161,7 +161,7 @@
     </mat-step>
     <mat-step label="Final Submission">
       <div>
-        <h1>Verify details</h1>
+        <h1 class="title-flex">Verify details <mat-icon>check_circle_outline</mat-icon></h1>
       </div>
       <div>
         <p>Template Name : {{ configFormGroup.controls.templateName.value }}</p>
@@ -170,8 +170,8 @@
           assessment Type: {{ configFormGroup.controls.assessmentId.value }}
         </p>
       </div>
-        <div *ngIf="accordionItems.length > 0">
-          <div class="accordion-container" *ngFor="let item of accordionItems">
+        <div *ngIf="questionsFormGroup.get('questionSet')?.value?.length">
+          <div class="accordion-container" *ngFor="let item of questionsFormGroup.get('questionSet')?.value">
             <mat-accordion class="accordion">
               <mat-expansion-panel class="accordion-panel" [expanded]="true">
                 <mat-expansion-panel-header>

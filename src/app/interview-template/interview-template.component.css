@@ -110,3 +110,12 @@ main {
   border-radius: 8px; /* Optional: Add border radius to accordion panels */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow for a raised effect */
 }
+.title-flex {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+
+    mat-icon {
+        color: #009400;
+    }
+}

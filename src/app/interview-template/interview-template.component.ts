@@ -1,17 +1,7 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import {
-  MatPaginator,
-  PageEvent,
-} from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { APIEnum } from '../common/enum/APIEnum';
@@ -24,23 +14,25 @@ import { SpinnerService } from '../services/spinner/spinner.service';
 
 type ExpectedType = {
   _id: String;
-  sectionName:String,
+  sectionName: String;
   questionsArray: questions[];
 };
- type questions={ _id: String; name: String; }
+type questions = { _id: String; name: String };
 @Component({
   selector: 'pace-hr1-uk-frontend-interview-template',
   templateUrl: './interview-template.component.html',
   styleUrl: './interview-template.component.css',
 })
 export class InterviewTemplateComponent implements OnInit {
+  public emptyQuestionSet: ExpectedType[] = [];
+
   configFormGroup = this._formBuilder.group({
     templateName: ['', Validators.required],
     domainId: ['', Validators.required],
     assessmentId: ['', Validators.required],
   });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+  questionsFormGroup = this._formBuilder.group({
+    questionSet: [this.emptyQuestionSet, Validators.required],
   });
   accordionItems: ExpectedType[] = [];
 
@@ -50,15 +42,10 @@ export class InterviewTemplateComponent implements OnInit {
   public users!: UserModel[];
   public domains!: MasterDataList[];
   public assessmentTypes!: MasterDataList[];
-  public displayedColumns: string[] = [
-    'no',
-    'section',
-    'name',
-    'action',
-  ];
+  public displayedColumns: string[] = ['no', 'section', 'name', 'action'];
   public questions = new MatTableDataSource<QuestionMarkModel>([]);
   public selectedQuestions: QuestionMarkModel[] = [];
-  public displayedSelectedQuestions:QuestionMarkModel[]=[]
+  public displayedSelectedQuestions: QuestionMarkModel[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
@@ -129,40 +116,58 @@ export class InterviewTemplateComponent implements OnInit {
   public selectQuestion(event: MatCheckboxChange, question: QuestionMarkModel) {
     question.isSelected = event.checked;
     if (event.checked) {
-      this.addSelectedRecord(question)
+      this.addSelectedRecord(question);
     }
     if (!event.checked) {
-      this.removeQuestion(question)
+      this.removeQuestion(question);
     }
   }
 
-  public addSelectedRecord(question: QuestionMarkModel) { 
-    const findSectionIndex = this.accordionItems.findIndex((a) => a._id === question.sectionId._id);
-    const { sectionId, name, _id } = question
+  public addSelectedRecord(question: QuestionMarkModel) {
+    let accordionItems: ExpectedType[] =
+      this.questionsFormGroup.get('questionSet')?.value || [];
+    const findSectionIndex = accordionItems.findIndex(
+      (a) => a._id === question.sectionId._id
+    );
+    const { sectionId, name, _id } = question;
     if (findSectionIndex === -1) {
       let data = {
-        _id: sectionId._id, sectionName: sectionId.name, questionsArray: [{ _id, name }]
-      }
-      this.accordionItems.push(data);
-    } else { 
-      this.accordionItems[findSectionIndex].questionsArray.push({_id,name})
+        _id: sectionId._id,
+        sectionName: sectionId.name,
+        questionsArray: [{ _id, name }],
+      };
+      accordionItems.push(data);
+    } else {
+      accordionItems[findSectionIndex].questionsArray.push({ _id, name });
     }
+    this.questionsFormGroup.patchValue({
+      questionSet: accordionItems,
+    });
   }
 
   public removeQuestion(question: QuestionMarkModel) {
-    const findSectionIndex = this.accordionItems.findIndex((a) => a._id === question.sectionId._id);
-    const { sectionId, name, _id } = question
-    if (findSectionIndex > -1) { 
-      const questionIndex=this.accordionItems[findSectionIndex].questionsArray.findIndex((a)=>a._id===_id)
-      this.accordionItems[findSectionIndex].questionsArray.splice(questionIndex, 1);
-      if (this.accordionItems[findSectionIndex].questionsArray.length === 0) {
-        if (this.accordionItems.length === 1) {
-          this.accordionItems=[]
+    let accordionItems: ExpectedType[] =
+      this.questionsFormGroup.get('questionSet')?.value || [];
+    const findSectionIndex = accordionItems.findIndex(
+      (a) => a._id === question.sectionId._id
+    );
+    const { sectionId, name, _id } = question;
+    if (findSectionIndex > -1) {
+      const questionIndex = accordionItems[
+        findSectionIndex
+      ].questionsArray.findIndex((a) => a._id === _id);
+      accordionItems[findSectionIndex].questionsArray.splice(questionIndex, 1);
+      if (accordionItems[findSectionIndex].questionsArray.length === 0) {
+        if (accordionItems.length === 1) {
+          accordionItems = [];
         } else {
-          this.accordionItems.splice(findSectionIndex,1);
+          accordionItems.splice(findSectionIndex, 1);
         }
       }
     }
+    this.questionsFormGroup.patchValue({
+      questionSet: accordionItems,
+    });
   }
   onPageChange(event: PageEvent) {
     // Check if there are more items on the next page
@@ -174,7 +179,7 @@ export class InterviewTemplateComponent implements OnInit {
     }
   }
 
-  submit() { 
-    console.log(this.configFormGroup)
+  submit() {
+    console.log(this.configFormGroup);
   }
 }
