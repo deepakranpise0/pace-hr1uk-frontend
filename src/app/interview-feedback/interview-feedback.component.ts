@@ -39,10 +39,7 @@ export class InterviewFeedbackComponent {
     this.initializeTabs();
   }
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-        this.tabGroup.selectedIndex = 0;
-    
+    this.tabGroup.selectedIndex = 0; 
   }
 
   toggleStar(behavior: any, starIndex: number) {
@@ -70,7 +67,6 @@ export class InterviewFeedbackComponent {
   
 
   submit() {
-    // Handle form submission
     console.log('Form submitted:', this.tabs.map(tab => tab.form.value));
   }
 
