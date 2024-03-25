@@ -2,7 +2,8 @@ export enum MasterDataType {
   DOMAIN = 'domain',
   SECTION = 'section',
   ASSESSMENT_TYPE = 'assessmentType',
-  QUESTION = 'questions',
+  QUESTION = 'behaviors',
+  CANDIDATES='candidates'
 }
 
 export enum MasterDataFormType {

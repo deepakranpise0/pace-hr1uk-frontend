@@ -19,17 +19,15 @@ import { ApiService } from './services/api/api.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private router:Router,private _apiService: ApiService) {}
+  constructor(private router: Router, private _apiService: ApiService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken=this._apiService.getAccessToken()
-    if (accessToken) {
-      request = request.clone({
+     
+    request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${this._apiService.accessToken}`
         }
-      });
-    }
+    });
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
@@ -39,4 +37,6 @@ export class AuthInterceptor implements HttpInterceptor {
       })
     );;
   }
+
+  
 }

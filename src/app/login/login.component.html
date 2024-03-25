@@ -1,7 +1,7 @@
 <div class="login-container">
-   <div class="login-background"></div> 
-  <div class="texture-overlay"></div>
-  <form class="login-form-wrapper" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+   <!-- <div class="login-background"></div> 
+  <div class="texture-overlay"></div> -->
+  <!-- <form class="login-form-wrapper" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <mat-card>
       <mat-card-header>
         <div class="company-logo">
@@ -28,7 +28,13 @@
         <button mat-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
       </mat-card-actions>
     </mat-card>
-  </form>
+  </form> -->
+  <button mat-raised-button color="primary" (click)="signInWithGoogle()">
+  Sign in with Google
+</button>
 </div>
+
+
+
 
 

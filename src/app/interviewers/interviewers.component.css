@@ -1,0 +1,11 @@
+main {
+
+    /* padding: 16px; */
+    .add-btn {
+        display: flex;
+        justify-content: end;
+        padding: 16px 16px 0 0;
+    }
+
+
+}

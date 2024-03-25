@@ -40,7 +40,23 @@ const routes: Routes = [
   {
     path: 'interview-feedback',
     loadChildren:()=>import('./interview-feedback/interview-feedback.module').then((m)=>m.InterviewTemplateModule)
-  }
+  },
+   {
+    path: 'completed-interview',
+    loadChildren: () =>
+      import('./completed-interview/completed-interview.module').then(
+        (m) => m.CompletedInterviewModule
+      ),
+    canActivate: [AuthGuard],
+  },
+   {
+    path: 'interviewers',
+    loadChildren: () =>
+      import('./interviewers/interviewers.module').then(
+        (m) => m.InterviewersModule
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

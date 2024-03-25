@@ -10,28 +10,11 @@
     </div>
     <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
         <a class="profile-icon">
-            <img src="../assets/images/profile.png"
+            <img [src]="_apiService.user?.photoURL"
                 alt="user-img" class="img-circle user-img">
         </a>
         <mat-menu #menu="matMenu" class="custom-menu">
-            <span class="profile-text">Hello Raf!</span>
-            <button mat-menu-item>
-                <mat-icon>lock</mat-icon>
-                <span>Reset Password</span>
-            </button>
-            <!-- <button mat-menu-item>
-                <mat-icon>image</mat-icon>
-                <span>Upload Profile Picture</span>
-            </button> -->
-            <!-- dynamic option  -->
-            <!-- <button mat-menu-item>
-                <mat-icon>person</mat-icon>
-                <span>Company</span>
-            </button>
-            <button mat-menu-item>
-                <mat-icon>account_circle</mat-icon>
-                <span>Accounts</span>
-            </button> -->
+            <span class="profile-text">{{_apiService.user?.displayName}}</span>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>

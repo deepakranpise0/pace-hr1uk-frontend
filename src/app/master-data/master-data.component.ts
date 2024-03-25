@@ -53,7 +53,6 @@ export class MasterDataComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      // Retrieve the value of 'type' parameter from the URL
       const typeParam = params.get('type');
       if (
         typeParam &&
@@ -62,14 +61,11 @@ export class MasterDataComponent implements OnInit {
         this.masterType = typeParam as MasterDataType;
         if (this.masterType === MasterDataType.QUESTION) {
           this.isQuestionsSelected = true;
-          // console.log(this.displayedColumns.slice(2));
           this.displayedColumns.splice(2, 0, 'section');
-          // console.log(this.displayedColumns);
         }
         this.fetchMasterList();
       } else {
-        // Invalid type, navigate back to home
-        this.router.navigate(['/']);
+        this.router.navigate(['login']);
       }
     });
   }
@@ -85,26 +81,18 @@ export class MasterDataComponent implements OnInit {
       : this.masterType;
   }
 
-  private fetchMasterList() {
+  async fetchMasterList() {
     this._spinner.showSpinner();
-    let endPoint = APIEnum.GET_MASTER + this.masterType;
     if (this.masterType === MasterDataType.QUESTION) {
-      endPoint = APIEnum.GET_Questions;
+      this.questionsData = await this._apiService.fetchQuestions();
+    } else if (this.masterType === MasterDataType.DOMAIN) {
+      this.masterData = await this._apiService.fetchDomains();
+    } else if (this.masterType === MasterDataType.ASSESSMENT_TYPE) {
+      this.masterData = await this._apiService.fetchAssessments();
+    } else if (this.masterType === MasterDataType.SECTION) {
+      this.masterData = await this._apiService.fetchSections();
     }
-    this._apiService.get(endPoint).subscribe(
-      (res: any) => {
-        if (res) {
-          if (this.masterType === MasterDataType.QUESTION)
-            this.questionsData.data = res;
-          else this.masterData.data = res;
-          this._spinner.hideSpinner();
-        }
-      },
-      (error) => {
-        console.log(error);
-        this._spinner.hideSpinner();
-      }
-    );
+    this._spinner.hideSpinner();
   }
 
   openDialog(data: any = null): void {

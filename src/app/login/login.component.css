@@ -29,7 +29,7 @@ mat-card-actions {
   position: absolute; /* Position the background image */
   top: 0;
   left: 0;
-  width: 100%;
+  width: 80%;
   height: 100%;
   background-image: url('../../assets/images/hr1.jpg'); /* Path to your background image */
   background-size: cover; /* Cover the entire container with the background image */
@@ -47,7 +47,3 @@ mat-card-actions {
   background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
 }
 
-.login-form-wrapper {
-  /* margin-left: auto; Align the wrapper container to the right */
-  /* max-width: 400px; Adjust the maximum width as needed */
-}

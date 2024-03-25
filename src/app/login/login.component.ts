@@ -1,3 +1,4 @@
+// signin.component.ts
 import {
   Component,
   OnInit,
@@ -21,10 +22,9 @@ import { ApiService } from '../services/api/api.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
   constructor(
-      private formBuilder: FormBuilder,
-      private _apiService: ApiService,
-      private router:Router
-    
+    private formBuilder: FormBuilder,
+    private _apiService: ApiService,
+    private router: Router    
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +43,6 @@ export class LoginComponent implements OnInit {
           (res: any) => {
             if (res) {
               this._apiService.isUserLoggedIn.next(true);
-              this._apiService.setLocalStorage(res.access_token,res.role);
               this.router.navigate(['home']);
             }
           },
@@ -53,4 +52,11 @@ export class LoginComponent implements OnInit {
         );
     }
   }
+
+  signInWithGoogle() {
+    return this._apiService.signInWithGooglePopup()
+  }
+
+
+  
 }

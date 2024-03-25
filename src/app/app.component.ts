@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   title = 'pace-hr1-uk-frontend';
   public activeIndex: number = 0;
   private breakpointObserver = inject(BreakpointObserver);
-  public navItems: NavLinksModel[] = NavItemsContant.filter((a)=>a.roles===this.authService.getUserRole());
+  public navItems: NavLinksModel[] = NavItemsContant.filter((a) => a.roles.includes(this._apiService.role));
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
   isLoggedIn: any;
   isOpened:boolean=true;
 
-  constructor(private router: Router, public _spinner: SpinnerService,public authService:ApiService) {}
+  constructor(private router: Router, public _spinner: SpinnerService,public _apiService:ApiService) {}
   ngOnInit() {
     this.router.events
       .pipe(
@@ -61,13 +61,15 @@ export class AppComponent implements OnInit {
         );
       });
     
-    this.authService.isLoggedIn.subscribe(value => { 
-       this.isLoggedIn=value
+    this._apiService.isLoggedIn.subscribe(value => { 
+      this.isLoggedIn = value;
+      this.navItems = NavItemsContant.filter((a) => a.roles.includes(this._apiService.role));
+
     });
   }
 
   logout() { 
-    this.authService.logout();
+    this._apiService.logout();
   }
 
   toggle() { 

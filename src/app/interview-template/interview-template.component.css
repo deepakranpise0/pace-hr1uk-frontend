@@ -97,7 +97,6 @@ main {
 .example-button-row button{
   margin:10px;
 }
-
 .accordion-container {
   margin-bottom: 10px; /* Adjust the margin as needed */
   border-radius: 6px;
@@ -138,4 +137,7 @@ main {
         line-height: 20px;
         margin-bottom: 0;
     }
+}
+.pointer {
+  cursor: pointer;
 }

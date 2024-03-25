@@ -1,23 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import {
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  PageEvent,
+} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+
+import {
+  ExpectedType,
+  TemplateModel,
+} from 'src/types';
 
 import { APIEnum } from '../common/enum/APIEnum';
 import { MasterDataType } from '../common/enum/AppEnum';
 import { MasterDataList } from '../common/models/MasterDataList';
 import { QuestionMarkModel } from '../common/models/QuestionMarkModel';
-import { UserModel } from '../common/models/UserModel';
 import { ApiService } from '../services/api/api.service';
 import { SpinnerService } from '../services/spinner/spinner.service';
 
-type ExpectedType = {
-  _id: String;
-  sectionName: String;
-  questionsArray: questions[];
-};
-type questions = { _id: String; name: String };
 @Component({
   selector: 'pace-hr1-uk-frontend-interview-template',
   templateUrl: './interview-template.component.html',
@@ -25,7 +33,7 @@ type questions = { _id: String; name: String };
 })
 export class InterviewTemplateComponent implements OnInit {
   public emptyQuestionSet: ExpectedType[] = [];
-
+  templateData = [];
   configFormGroup = this._formBuilder.group({
     templateName: ['', Validators.required],
     domainId: ['', Validators.required],
@@ -38,16 +46,20 @@ export class InterviewTemplateComponent implements OnInit {
 
   isLinear = false;
   public smallScreen: boolean = false;
-
-  public users!: UserModel[];
   public domains!: MasterDataList[];
+  public hide: boolean = false;
   public assessmentTypes!: MasterDataList[];
   public displayedColumns: string[] = ['no', 'section', 'name', 'action'];
+  public displayedColumn: string[] = ['no', 'templateName', 'domain', 'action'];
+  public selectedTemplate: any = null;
   public questions = new MatTableDataSource<QuestionMarkModel>([]);
   public selectedQuestions: QuestionMarkModel[] = [];
   public displayedSelectedQuestions: QuestionMarkModel[] = [];
   public masterDataType = MasterDataType;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  templateTab: boolean = false;
+  createTab: boolean = false;
+  viewTab: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -55,45 +67,21 @@ export class InterviewTemplateComponent implements OnInit {
     private _spinner: SpinnerService
   ) {}
   ngOnInit() {
-    this.fetchGetData();
-    this.fetchMasterData(MasterDataType.DOMAIN);
-    this.fetchMasterData(MasterDataType.ASSESSMENT_TYPE);
-    this.fetchGetData(true);
-
     window.addEventListener('resize', () => {
       this.smallScreen = window.innerWidth < 768;
     });
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.questions.paginator = this.paginator;
+    this.templateData = await this._apiService.fetchTemplateData();
+    this.questions = await this._apiService.fetchQuestions();
+    this.domains = await this._apiService.fetchDomains();
+    this.assessmentTypes = await this._apiService.fetchAssessments();
+    this.setTabVisible('templateTab');
   }
 
-  private fetchGetData(questions: boolean = false) {
-    let endPoint = APIEnum.GET_USERS;
-    if (questions) {
-      endPoint = APIEnum.GET_Questions;
-    }
-    this._apiService.get(endPoint).subscribe(
-      (res: any) => {
-        if (res) {
-          if (questions) {
-            res.forEach((question: QuestionMarkModel) => {
-              question.isSelected = false; // Set isSelected to false for each entry
-            });
-            this.questions.data = res;
-          } else {
-            this.users = res;
-          }
-          this._spinner.hideSpinner();
-        }
-      },
-      (error) => {
-        console.log(error);
-        this._spinner.hideSpinner();
-      }
-    );
-  }
+  
 
   private fetchMasterData(type: MasterDataType) {
     let endPoint = APIEnum.GET_MASTER + type;
@@ -171,7 +159,6 @@ export class InterviewTemplateComponent implements OnInit {
     });
   }
   onPageChange(event: PageEvent) {
-    // Check if there are more items on the next page
     if (event.previousPageIndex && event.pageIndex < event.previousPageIndex) {
       const nextPageFirstIndex = event.pageIndex * event.pageSize;
       if (this.selectedQuestions.length > nextPageFirstIndex) {
@@ -180,23 +167,99 @@ export class InterviewTemplateComponent implements OnInit {
     }
   }
 
-  submit() {
-    console.log(this.configFormGroup);
+  async submit() {
+    const templateBody: TemplateModel = {
+      templateName: this.configFormGroup.get('templateName')?.value || '',
+      domainId: this.configFormGroup.get('domainId')?.value || '',
+      assessmentId: this.configFormGroup.get('assessmentId')?.value || '',
+      questionsPerSection: [
+        {
+          sectionId: '',
+          questionId: [],
+        },
+      ],
+    };
+
+    const questionSet = this.questionsFormGroup.get('questionSet')?.value || [];
+
+    if (questionSet.length > 0) {
+      questionSet.forEach((element, index) => {
+        const { _id, questionsArray } = questionSet[index];
+        templateBody.questionsPerSection[index] = {
+          sectionId: '',
+          questionId: [],
+        };
+        templateBody.questionsPerSection[index].sectionId = _id || '';
+        templateBody.questionsPerSection[index].questionId = questionsArray.map(
+          ({ _id }) => _id
+        );
+      });
+      try {
+        // Call the API service to submit the template body
+        const templateResponse = await this._apiService.submitTemplate(
+          templateBody
+        );
+        console.log(templateResponse);
+        this.setTabVisible('templateTab');
+      } catch (error) {
+        console.error('Error submitting template:', error);
+      }
+    }
   }
-  public getConfigName(masterDataType : MasterDataType, id: string): string {
-    let masterData=[];
-    switch(masterDataType) {
-      case MasterDataType.DOMAIN : {
+
+  public getConfigName(masterDataType: MasterDataType, id: string): string {
+    let masterData = [];
+    switch (masterDataType) {
+      case MasterDataType.DOMAIN: {
         masterData = this.domains;
         break;
       }
-      case MasterDataType.ASSESSMENT_TYPE : {
+      case MasterDataType.ASSESSMENT_TYPE: {
         masterData = this.assessmentTypes;
         break;
       }
-      default : return '';
+      default:
+        return '';
     }
+    return (
+      (masterData && masterData.find((data) => data._id === id)?.name) || ''
+    );
+  }
 
-    return masterData.find(data => data._id === id)?.name || '';
+  public viewData(data: any) {
+    this.setTabVisible('viewTab');
+    this.selectedTemplate = data;
+    console.log(data);
+  }
+  setTabVisible(tab: string) {
+    switch (tab) {
+      case 'viewTab':
+        this.viewTab = true;
+        this.templateTab = false;
+        this.createTab = false;
+        break;
+      case 'templateTab':
+        this.templateTab = true;
+        this.viewTab = false;
+        this.createTab = false;
+        break;
+      case 'createTab':
+        this.createTab = true;
+        this.viewTab = false;
+        this.templateTab = false;
+        break;
+      default:
+        this.templateTab = true;
+        this.viewTab = false;
+        this.createTab = false;
+        break;
+    }
+  }
+
+  editData(_t45: any) {
+    throw new Error('Method not implemented.');
+  }
+  deleteData(arg0: any) {
+    throw new Error('Method not implemented.');
   }
 }

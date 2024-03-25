@@ -18,6 +18,7 @@ import {
 } from 'src/app/common/enum/AppEnum';
 import { MasterDataList } from 'src/app/common/models/MasterDataList';
 import { MasterDataModel } from 'src/app/common/models/MasterDataModel';
+import { ApiService } from 'src/app/services/api/api.service';
 
 export interface DialogData {
   type: MasterDataType;
@@ -37,19 +38,15 @@ export class AddEditPopupComponent {
   public isEdit: boolean = false;
   public editId!: string;
   public masterForm: FormGroup;
-  foods = [
-    { value: '65d68e848de0efa24950573b', viewValue: 'Steak' },
-    { value: '65d68e848de0efa24950573b', viewValue: 'Pizza' },
-    { value: '65d68e848de0efa24950573b', viewValue: 'Tacos' },
-  ];
+  sections: any;
   constructor(
     private fb: FormBuilder,
+    public _apiService:ApiService,
     public dialogRef: MatDialogRef<AddEditPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
     this.masterForm = this.fb.group({
       name: ['', Validators.required],
-      description: '',
     });
 
     if (this.data && this.data?.masterType === MasterDataType.QUESTION) {
@@ -58,14 +55,44 @@ export class AddEditPopupComponent {
         this.fb.control('', Validators.required)
       );
     }
+    if (this.data && this.data?.masterType === MasterDataType.CANDIDATES) {
+      this.masterForm.addControl(
+        'email',
+        this.fb.control('', [Validators.required,Validators.email])
+      );
+    } else {
+       this.masterForm.addControl(
+        'description',
+        this.fb.control('')
+      );
+    }
     if (this.data && this.data?.action === MasterDataFormType.UPDATE) {
       this.isEdit = true;
       this.masterForm.patchValue({
         name: this.data.editData.name,
-        description: this.data.editData.description,
       });
+      if (this.data.editData.email) {
+         this.masterForm.patchValue({
+        email: this.data.editData.email,
+      });
+      }
+      if (this.data.editData.description) {
+        this.masterForm.patchValue({
+          description: this.data.editData.description,
+        });
+      }
+      if (this.data.editData.sectionId) {
+        this.masterForm.patchValue({
+          sectionId: this.data.editData.sectionId._id,
+        });
+      }
       this.editId = this.data.editData._id;
     }
+    this.section();
+  }
+
+  async section(){
+    this.sections = await this._apiService.fetchSections();
   }
 
   onNoClick(): void {

@@ -14,16 +14,25 @@
             <mat-form-field>
                 <mat-label>Section</mat-label>
                 <mat-select formControlName="sectionId">
-                    @for (food of foods; track food) {
-                    <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                    @for (section of sections; track section) {
+                    <mat-option [value]="section._id">{{section.name}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
         </div>
         <div>
-            <mat-form-field>
+            <mat-form-field *ngIf="data.masterType != masterDataType.CANDIDATES">
                 <mat-label>Description</mat-label>
                 <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+        <div *ngIf="data.masterType === masterDataType.CANDIDATES">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+                <mat-error *ngIf="masterForm.get('email')?.invalid && masterForm.get('email')?.touched">
+                    Email is required
+                </mat-error>
             </mat-form-field>
         </div>
     </mat-dialog-content>
