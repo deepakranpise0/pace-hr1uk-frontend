@@ -50,6 +50,7 @@
           </table>
 
           <mat-paginator
+            [length]="completedInterViewData.length"
             [pageSizeOptions]="[10, 20]"
             showFirstLastButtons
             aria-label="Select page of periodic elements"

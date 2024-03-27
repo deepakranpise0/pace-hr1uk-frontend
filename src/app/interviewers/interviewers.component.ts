@@ -36,7 +36,9 @@ export class InterviewersComponent {
     private _apiService: ApiService,
     private _spinner: SpinnerService
   ) {
+    _spinner.showSpinner();
     this.getData();
+    _spinner.hideSpinner();
   }
 
   async getData() {

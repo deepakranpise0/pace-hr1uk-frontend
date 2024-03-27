@@ -95,6 +95,18 @@ export class MasterDataComponent implements OnInit {
     this._spinner.hideSpinner();
   }
 
+  public getLength(): number {
+    if (this.masterType === MasterDataType.QUESTION) {
+      return this.questionsData.data.length || 0;
+    } else if (this.masterType === MasterDataType.DOMAIN) {
+      return this.masterData.data.length || 0;
+    } else if (this.masterType === MasterDataType.ASSESSMENT_TYPE) {
+      return this.masterData.data.length || 0;
+    } else if (this.masterType === MasterDataType.SECTION) {
+      return this.masterData.data.length || 0;
+    }
+    return 0;
+  }
   openDialog(data: any = null): void {
     let dialogData = {
       action: MasterDataFormType.ADD,

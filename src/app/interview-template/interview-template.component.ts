@@ -65,20 +65,23 @@ export class InterviewTemplateComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _apiService: ApiService,
     private _spinner: SpinnerService
-  ) {}
+  ) {
+  }
   ngOnInit() {
     window.addEventListener('resize', () => {
       this.smallScreen = window.innerWidth < 768;
     });
   }
-
+  
   async ngAfterViewInit() {
+    this._spinner.showSpinner();
     this.questions.paginator = this.paginator;
     this.templateData = await this._apiService.fetchTemplateData();
     this.questions = await this._apiService.fetchQuestions();
     this.domains = await this._apiService.fetchDomains();
     this.assessmentTypes = await this._apiService.fetchAssessments();
     this.setTabVisible('templateTab');
+    this._spinner.hideSpinner();
   }
 
   
