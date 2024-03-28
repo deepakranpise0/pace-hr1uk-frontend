@@ -92,18 +92,19 @@ export class MasterDataComponent implements OnInit {
     } else if (this.masterType === MasterDataType.SECTION) {
       this.masterData = await this._apiService.fetchSections();
     }
+    this.paginator.length = this.getLength();
     this._spinner.hideSpinner();
   }
 
   public getLength(): number {
     if (this.masterType === MasterDataType.QUESTION) {
-      return this.questionsData.data.length || 0;
+      return this.questionsData?.data?.length || 0;
     } else if (this.masterType === MasterDataType.DOMAIN) {
-      return this.masterData.data.length || 0;
+      return this.masterData?.data?.length || 0;
     } else if (this.masterType === MasterDataType.ASSESSMENT_TYPE) {
-      return this.masterData.data.length || 0;
+      return this.masterData?.data?.length || 0;
     } else if (this.masterType === MasterDataType.SECTION) {
-      return this.masterData.data.length || 0;
+      return this.masterData?.data?.length || 0;
     }
     return 0;
   }

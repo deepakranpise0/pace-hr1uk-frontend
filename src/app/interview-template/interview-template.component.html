@@ -1,6 +1,6 @@
 <main>
   <div style="display: flex; align-items: center;">
-    <div style="padding: 10px; display: flex; align-items: center;" (click)="setTabVisible('templateTab')">
+    <div style="padding: 10px; display: flex; align-items: center;" *ngIf="createTab" (click)="setTabVisible('templateTab')">
       <mat-icon
         class="pointer"
         aria-hidden="false"
@@ -9,7 +9,7 @@
       ></mat-icon>
     </div>
     <h5 class="mat-h2" style="margin: 0; flex-grow: 1;">Interview Templates</h5>
-    <div style="padding: 0.5rem;">
+    <div style="padding: 0.5rem;" *ngIf="!createTab">
       <button
         class="align-end"
         mat-stroked-button

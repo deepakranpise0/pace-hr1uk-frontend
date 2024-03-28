@@ -1,6 +1,7 @@
 <main>
   <div style="padding: 10px; display: flex; align-items: center;" (click)="setTabVisible()">
     <mat-icon
+    *ngIf="isUserSelected"
       class="pointer"
       aria-hidden="false"
       aria-label="Example home icon"
@@ -47,6 +48,7 @@
               color="primary"
               type="submit"
               (click)="goToStepper()"
+              [disabled]="!templateConfigForm.valid"
             >
               Next
             </button>
